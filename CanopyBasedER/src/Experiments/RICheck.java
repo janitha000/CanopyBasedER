@@ -22,15 +22,18 @@ public class RICheck {
         test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
         
         for (Entity en : test) {
+            //System.out.println(en.getFirstName());
                 if(RI.containsEntity(en)){
+                    System.out.println("CAME");
                     RI.appendRecord(en, en.getRecordID());
                 } else{
 		RI.appendEntity(en);
 		}
         
-        RI.printIndex();
+       
         
     }
+         RI.printIndex();
     }
     
     

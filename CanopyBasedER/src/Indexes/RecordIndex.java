@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import DataStuctures.RecordIDs;
 import java.util.ArrayList;
+import java.util.Arrays;
 /**
  *
  * @author JanithaT
@@ -39,11 +40,14 @@ public class RecordIndex {
     public void printIndex(){
         RI.entrySet().stream().forEach((entry) -> {
             System.out.println("Key : " + entry.getKey().getFirstName() + " Value : "
-                    + entry.getValue());
+                    + entry.getValue().toString());
+            System.out.println(entry.getKey().hashCode());
         });
     }
     
     public boolean containsEntity(Entity entity){
         return RI.containsKey(entity);
     }
+    
+    
 }

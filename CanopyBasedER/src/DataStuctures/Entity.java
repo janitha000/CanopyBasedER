@@ -56,6 +56,28 @@ public class Entity {
         this.city = city;
     }
    
-   
+   @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + getFirstName().length() + getLastName().length();
+        return hash;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Entity other = (Entity) obj;
+        if (!(other.getFirstName() == getFirstName())
+                || !(other.getLastName()== getLastName())
+                || !(other.getCity()== getCity())) {
+            return false;
+        }
+        return true;
+    }
     
 }
