@@ -6,8 +6,6 @@
 package Utilities;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,9 +54,9 @@ public class mySqlConnection {
       
              conn.close();  
        }
-       public static void main(String[] args) throws SQLException {
+       /*public static void main(String[] args) throws SQLException {
            mySqlConnection connecton = new mySqlConnection("researchtest", "root", "jibtennakoon", "person");
            connecton.getData();
             
-       }
+       }*/
 }

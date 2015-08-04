@@ -15,6 +15,14 @@ public class Entity {
    private String firstName;
    private String lastName;
    private String city;
+   
+   public Entity(String rID,String Fname,String LName,String City){
+       recordID = rID;
+       firstName = Fname;
+       lastName = LName;
+       city = City;
+       
+   }
 
     public String getRecordID() {
         return recordID;
