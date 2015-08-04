@@ -56,6 +56,7 @@ public class Entity {
         this.city = city;
     }
    
+    //modify this!!!!
    @Override
     public int hashCode() {
         int hash = 5;
