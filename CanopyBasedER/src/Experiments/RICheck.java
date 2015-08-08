@@ -20,10 +20,13 @@ public class RICheck {
         test.add(new Entity("AAB", "Vindya ", "Hemali", "Matara"));
         test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
         test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Matara"));
+        test.add(new Entity("AAE", "Kavinda", "Herath", "Kandy"));
+        test.add(new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
+        test.add(new Entity("AAG", "Janith", "Tenna", "Kandy"));
         
         for (Entity en : test) {
             //System.out.println(en.getFirstName());
-                if(RI.containsEntity(en)){
+                if(RI.hasEntity(en)){
                     RI.appendRecord(en, en.getRecordID());
                 } else{
 		RI.appendEntity(en);

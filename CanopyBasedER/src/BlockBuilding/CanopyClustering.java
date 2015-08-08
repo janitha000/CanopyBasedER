@@ -8,6 +8,7 @@ package BlockBuilding;
 import DataStuctures.Entity;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
+import Indexes.RecordIndex;
 import java.util.Iterator;
 import java.util.List;
 import Utilities.JaccardSimilarity;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class CanopyClustering {
     CanopyIndex CI;
     EntityIndex EI;
+    RecordIndex RI;
     int noOfRecords;
     List<Entity> records;
     private final double t1;
@@ -31,6 +33,7 @@ public class CanopyClustering {
         records = Erecords;
         CI = new CanopyIndex();
         EI = new EntityIndex();
+        RI = new RecordIndex();
         noOfRecords = Erecords.size();
         t1 = T1;
         t2 = T2;
@@ -40,22 +43,56 @@ public class CanopyClustering {
         while(!records.isEmpty()){
             Iterator iter = records.iterator();
             Entity firstEntity = (Entity) iter.next();
-            
+            String recordID = firstEntity.getRecordID();
+//            if(RI.hasEntity(firstEntity)){
+//                if(!RI.getDuplicates(firstEntity).contains(recordID)){
+//                    RI.appendRecord(firstEntity, recordID);
+//                    continue;
+//                } 
+//            }
+//            else {
+//                    RI.appendEntity(firstEntity);
+//                }
+            if(blockID ==1){
+                RI.appendEntity(firstEntity);
+            }
+            System.out.println("Entity: " + recordID);
             iter.remove();
             records.remove(firstEntity);
             
             //System.out.println(firstEntity.getRecordID() + " " + blockID + " " + CI);
-            String recordID = firstEntity.getRecordID();
+            //RI.appendEntity(firstEntity);
             CI.createBlock(blockID, recordID);
             EI.appendToBlock(recordID, blockID);
-            ArrayList<String> ids = new ArrayList<String>();
+            //ArrayList<String> ids = new ArrayList<String>();
                        
             while (iter.hasNext()) {
                 Entity currentEntity = (Entity) iter.next();
-                double similarity = getSimilarity(firstEntity, currentEntity);
                 String currentID = currentEntity.getRecordID();
+//                if(RI.hasEntity(currentEntity)){
+//                    System.out.println("CAMR TO EQUAL " + currentID);
+//                    if(!RI.getDuplicates(currentEntity).contains(recordID)){
+//                        RI.appendRecord(currentEntity, currentID);
+//                        continue;
+//                    }
+//                    
+//                }else {
+//                        RI.appendEntity(currentEntity);
+//                    }
+                if(blockID ==1){
+                    if(RI.hasEntity(currentEntity)){
+                        RI.appendRecord(currentEntity, currentID);
+                        continue;                    
+                    } else {
+                        RI.appendEntity(currentEntity);
+                    }
+                }
+                   
+                double similarity = getSimilarity(firstEntity, currentEntity);
+                System.out.println("\t " + currentID);
                 
                 if (t1 <= similarity) {
+                    //RI.appendEntity(currentEntity);
                     CI.appendToBlock(blockID, currentID);
                     EI.appendToBlock(currentID, blockID);
                     //ids.add(currentEntity.getRecordID());
@@ -65,13 +102,16 @@ public class CanopyClustering {
                 if (t2 <= similarity) {
                     iter.remove();
                     records.remove(currentEntity);
+                    System.out.println("REMOVED " + currentID);
                 }
             }
+            RI.printIndex();
             //CI.appendToBlockAyyayList(blockID, ids);
             blockID++;
         }
-        CI.printIndex();
-        EI.printIndex();
+        //RI.printIndex();
+        //CI.printIndex();
+        //EI.printIndex();
         }
         
        

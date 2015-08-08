@@ -20,7 +20,7 @@ public class RecordIndex {
     public Map<Entity,ArrayList> RI = new HashMap<Entity,ArrayList>();
     
     public void appendEntity(Entity entity){
-        
+        //System.out.println("CAME "+ entity.getRecordID());
         ArrayList<String> recordIDs = new ArrayList<>();
         recordIDs.add(entity.getRecordID());
         RI.put(entity, recordIDs);
@@ -33,21 +33,30 @@ public class RecordIndex {
         
     }
     
+    public ArrayList getDuplicates(Entity entity){
+        ArrayList<String> IDs = RI.get(entity);
+        return IDs;
+    }
+    
+    public Boolean hasEntity(Entity entity){
+        //System.out.println("CAME " + entity.getRecordID());
+        return RI.containsKey(entity);
+    }
+    
     public Map<Entity,ArrayList> getRecordIndex(){
         return RI;
     }
     
     public void printIndex(){
+        System.out.println("RECORD INDEX");
         RI.entrySet().stream().forEach((entry) -> {
             System.out.println("Key : " + entry.getKey().getFirstName() + " Value : "
                     + entry.getValue().toString());
-            System.out.println(entry.getKey().hashCode());
+            //System.out.println(entry.getKey().hashCode());
         });
     }
     
-    public boolean containsEntity(Entity entity){
-        return RI.containsKey(entity);
-    }
+    
     
     
 }

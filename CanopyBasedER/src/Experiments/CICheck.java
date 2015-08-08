@@ -27,7 +27,7 @@ public class CICheck {
         test.add(new Entity("AAA", "Janitha", "Tennakoon", "Kandy"));
         test.add(new Entity("AAB", "Vindya ", "Hemali", "Matara"));
         test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
-        test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Galle"));
+        test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Matara"));
         test.add(new Entity("AAE", "Kavinda", "Herath", "Kandy"));
         test.add(new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
         test.add(new Entity("AAG", "Janith", "Tenna", "Kandy"));
