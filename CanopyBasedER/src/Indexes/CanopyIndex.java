@@ -30,7 +30,14 @@ public class CanopyIndex {
         CI.put(blockID, recordIDs);
     }
     
+    public void appendToBlockAyyayList(int blockID,ArrayList<String> recordIDs ){
+        ArrayList<String> OrecordIDs = CI.get(blockID);
+        OrecordIDs.addAll(recordIDs);
+        CI.put(blockID, OrecordIDs);
+    }
+    
     public void printIndex(){
+        System.out.println("CANOPY INDEX");
         CI.entrySet().stream().forEach((entry) -> {
             System.out.println("Key : " + entry.getKey() + " Value : "
                     + entry.getValue().toString());

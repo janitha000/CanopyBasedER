@@ -5,20 +5,20 @@
  */
 package Experiments;
 
+import BlockBuilding.CanopyClustering;
 import DataStuctures.Entity;
-import static Experiments.RICheck.RI;
-import Indexes.RecordIndex;
+import Indexes.CanopyIndex;
+import Indexes.EntityIndex;
 import java.util.ArrayList;
 import java.util.List;
-import BlockBuilding.CanopyClustering;
-import Indexes.CanopyIndex;
 
 /**
  *
  * @author JanithaT
  */
-public class CICheck {
-    static CanopyIndex CI;   
+public class EICheckwithCI {
+    static CanopyIndex CI; 
+    static EntityIndex EI;
     
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
@@ -35,7 +35,7 @@ public class CICheck {
         CanopyClustering CC = new CanopyClustering(test, 0.6, 0.9);
         CC.createCanopies();
         
-        long stopTime = System.currentTimeMillis();
+         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         System.out.println("Elapsed time is " +elapsedTime);
         

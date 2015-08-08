@@ -7,9 +7,11 @@ package BlockBuilding;
 
 import DataStuctures.Entity;
 import Indexes.CanopyIndex;
+import Indexes.EntityIndex;
 import java.util.Iterator;
 import java.util.List;
 import Utilities.JaccardSimilarity;
+import java.util.ArrayList;
 
 
 /**
@@ -18,6 +20,7 @@ import Utilities.JaccardSimilarity;
  */
 public class CanopyClustering {
     CanopyIndex CI;
+    EntityIndex EI;
     int noOfRecords;
     List<Entity> records;
     private final double t1;
@@ -27,6 +30,7 @@ public class CanopyClustering {
         
         records = Erecords;
         CI = new CanopyIndex();
+        EI = new EntityIndex();
         noOfRecords = Erecords.size();
         t1 = T1;
         t2 = T2;
@@ -39,27 +43,35 @@ public class CanopyClustering {
             
             iter.remove();
             records.remove(firstEntity);
-            System.out.println(firstEntity.getRecordID() + " " + blockID + " " + CI);
-            CI.createBlock(blockID, firstEntity.getRecordID());
+            
+            //System.out.println(firstEntity.getRecordID() + " " + blockID + " " + CI);
+            String recordID = firstEntity.getRecordID();
+            CI.createBlock(blockID, recordID);
+            EI.appendToBlock(recordID, blockID);
+            ArrayList<String> ids = new ArrayList<String>();
                        
             while (iter.hasNext()) {
                 Entity currentEntity = (Entity) iter.next();
                 double similarity = getSimilarity(firstEntity, currentEntity);
+                String currentID = currentEntity.getRecordID();
                 
                 if (t1 <= similarity) {
-                    CI.appendToBlock(blockID, currentEntity.getRecordID());
+                    CI.appendToBlock(blockID, currentID);
+                    EI.appendToBlock(currentID, blockID);
+                    //ids.add(currentEntity.getRecordID());
                 }
 
                 // Removal threshold:
                 if (t2 <= similarity) {
-                    //CI.appendToBlock(blockID, currentEntity.getRecordID());
                     iter.remove();
                     records.remove(currentEntity);
                 }
             }
+            //CI.appendToBlockAyyayList(blockID, ids);
             blockID++;
         }
         CI.printIndex();
+        EI.printIndex();
         }
         
        
