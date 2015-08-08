@@ -56,12 +56,11 @@ public class CanopyClustering {
             if(blockID ==1){
                 RI.appendEntity(firstEntity);
             }
-            System.out.println("Entity: " + recordID);
-            iter.remove();
-            records.remove(firstEntity);
             
-            //System.out.println(firstEntity.getRecordID() + " " + blockID + " " + CI);
-            //RI.appendEntity(firstEntity);
+            iter.remove();
+            //records.remove(firstEntity);
+            
+            
             CI.createBlock(blockID, recordID);
             EI.appendToBlock(recordID, blockID);
             //ArrayList<String> ids = new ArrayList<String>();
@@ -82,6 +81,7 @@ public class CanopyClustering {
                 if(blockID ==1){
                     if(RI.hasEntity(currentEntity)){
                         RI.appendRecord(currentEntity, currentID);
+                        iter.remove();
                         continue;                    
                     } else {
                         RI.appendEntity(currentEntity);
@@ -89,10 +89,9 @@ public class CanopyClustering {
                 }
                    
                 double similarity = getSimilarity(firstEntity, currentEntity);
-                System.out.println("\t " + currentID);
+                
                 
                 if (t1 <= similarity) {
-                    //RI.appendEntity(currentEntity);
                     CI.appendToBlock(blockID, currentID);
                     EI.appendToBlock(currentID, blockID);
                     //ids.add(currentEntity.getRecordID());
@@ -101,17 +100,17 @@ public class CanopyClustering {
                 // Removal threshold:
                 if (t2 <= similarity) {
                     iter.remove();
-                    records.remove(currentEntity);
-                    System.out.println("REMOVED " + currentID);
+                    //records.remove(currentEntity);
+                    
                 }
             }
-            RI.printIndex();
+            
             //CI.appendToBlockAyyayList(blockID, ids);
             blockID++;
         }
-        //RI.printIndex();
-        //CI.printIndex();
-        //EI.printIndex();
+        RI.printIndex();
+        CI.printIndex();
+        EI.printIndex();
         }
         
        

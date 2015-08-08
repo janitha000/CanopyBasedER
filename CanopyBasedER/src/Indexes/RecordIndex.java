@@ -20,7 +20,7 @@ public class RecordIndex {
     public Map<Entity,ArrayList> RI = new HashMap<Entity,ArrayList>();
     
     public void appendEntity(Entity entity){
-        //System.out.println("CAME "+ entity.getRecordID());
+        
         ArrayList<String> recordIDs = new ArrayList<>();
         recordIDs.add(entity.getRecordID());
         RI.put(entity, recordIDs);
@@ -39,7 +39,7 @@ public class RecordIndex {
     }
     
     public Boolean hasEntity(Entity entity){
-        //System.out.println("CAME " + entity.getRecordID());
+        
         return RI.containsKey(entity);
     }
     
