@@ -7,15 +7,18 @@ package Indexes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import Utilities.Serialization;
+import java.io.Serializable;
 
 /**
  *
  * @author JanithaT
  */
-public class CanopyIndex {
+public class CanopyIndex implements Serializable{
     public Map<Integer,ArrayList> CI = new HashMap<Integer, ArrayList>();;
-            
+    int lastIndex;        
 
     public void createBlock(int blockID, String recordID){
        
@@ -36,6 +39,18 @@ public class CanopyIndex {
         CI.put(blockID, OrecordIDs);
     }
     
+    public void setLastIndex(int ID){
+        lastIndex = ID;
+    }
+    
+    public int getLastIndex(){
+        return lastIndex;
+    }
+    
+    public Iterator<Integer> iterator() {
+        return this.iterator();
+    }
+    
     public void printIndex(){
         System.out.println("CANOPY INDEX");
         CI.entrySet().stream().forEach((entry) -> {
@@ -44,4 +59,8 @@ public class CanopyIndex {
             //System.out.println(entry.getKey().hashCode());
         });
     }
+    
+    
+
+    
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import BlockBuilding.CanopyClustering;
 import Indexes.CanopyIndex;
+import Utilities.Serialization;
 
 /**
  *
@@ -38,6 +39,11 @@ public class CICheck {
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
         System.out.println("Elapsed time is " +elapsedTime);
+        
+        
+        CanopyIndex CCI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
+        CCI.printIndex();
+        
         
     }
 }

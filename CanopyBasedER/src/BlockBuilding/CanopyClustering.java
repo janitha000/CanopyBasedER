@@ -12,6 +12,7 @@ import Indexes.RecordIndex;
 import java.util.Iterator;
 import java.util.List;
 import Utilities.JaccardSimilarity;
+import Utilities.Serialization;
 import java.util.ArrayList;
 
 
@@ -27,6 +28,7 @@ public class CanopyClustering {
     List<Entity> records;
     private final double t1;
     private final double t2;
+    int blockID;
     
     public CanopyClustering(List<Entity> Erecords, Double T1, Double T2){
         
@@ -37,9 +39,10 @@ public class CanopyClustering {
         noOfRecords = Erecords.size();
         t1 = T1;
         t2 = T2;
+        blockID=0;
     }
         public void createCanopies(){
-        int blockID = 1;
+        blockID = 1;
         while(!records.isEmpty()){
             Iterator iter = records.iterator();
             Entity firstEntity = (Entity) iter.next();
@@ -106,11 +109,16 @@ public class CanopyClustering {
             }
             
             //CI.appendToBlockAyyayList(blockID, ids);
+            CI.setLastIndex(blockID);
             blockID++;
         }
+        Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
+        Serialization.storeSerializedObject(RI, "E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
+        Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
         RI.printIndex();
         CI.printIndex();
         EI.printIndex();
+        
         }
         
        
