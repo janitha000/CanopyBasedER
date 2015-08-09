@@ -9,6 +9,8 @@ import DataStuctures.Entity;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Indexes.RecordIndex;
+import Utilities.Serialization;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -23,27 +25,38 @@ public class DynamicCanopy {
     private final double t2;
     Entity Entity;
     
-    public DynamicCanopy(Entity entity, Double T1, Double T2){
-        CI = new CanopyIndex();
-        EI = new EntityIndex();
-        RI = new RecordIndex();
+    public DynamicCanopy( Double T1, Double T2){
+        CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
+        EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
+        RI = (RecordIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
         t1=T1;
         t2=T2;
-        Entity = entity;
+        
     }
     
-    public void AddToCanopy(){
+    public void AddToCanopy(Entity entity){
+        Entity = entity;
         if(RI.hasEntity(Entity)){
-            RI.appendRecord(Entity, Entity.getRecordID());
+            if(!RI.getDuplicates(Entity).contains(Entity.getRecordID())){       //not needed if same record ID not comes again
+                RI.appendRecord(Entity, Entity.getRecordID());
+                Serialization.storeSerializedObject(RI, "E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
+            }
         } else {
-                
             RI.appendEntity(Entity);
-            int blockID = CI.getLastIndex() +1;
-            Iterator itr = CI.iterator();
+            int blockID = CI.getLastIndex();
+            ArrayList<String> ids = new ArrayList<>();
             
+            Iterator itr = CI.keys().iterator();
+            while(itr.hasNext()){
+                String recID =  CI.canopyRecordID((int) itr.next());
+               // Entity currentEntity = 
+                //double similarity = getSimilarity(Entity, currentEntity);
+                
+            }
+        }
                     
         
         
-        }
+        
     }
 }

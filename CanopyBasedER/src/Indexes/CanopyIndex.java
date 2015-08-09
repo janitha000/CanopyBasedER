@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 import Utilities.Serialization;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  *
@@ -18,7 +19,8 @@ import java.io.Serializable;
  */
 public class CanopyIndex implements Serializable{
     public Map<Integer,ArrayList> CI = new HashMap<Integer, ArrayList>();;
-    int lastIndex;        
+    int lastIndex;    
+    private static final long serialVersionUID = 1113799434508676095L;
 
     public void createBlock(int blockID, String recordID){
        
@@ -47,8 +49,12 @@ public class CanopyIndex implements Serializable{
         return lastIndex;
     }
     
-    public Iterator<Integer> iterator() {
-        return this.iterator();
+    public Set keys() {
+        return CI.keySet();
+    }
+    
+    public String canopyRecordID(int blockID){
+        return (String) CI.get(blockID).get(0);
     }
     
     public void printIndex(){

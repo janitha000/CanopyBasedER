@@ -7,11 +7,12 @@ package Experiments;
 import DataStuctures.Entity;
 import java.util.ArrayList;
 import Indexes.RecordIndex;
+import java.io.Serializable;
 /**
  *
  * @author JanithaT
  */
-public class RICheck {
+public class RICheck implements Serializable{
     static RecordIndex RI;
     public static void main(String[] args) {
         RI = new RecordIndex();

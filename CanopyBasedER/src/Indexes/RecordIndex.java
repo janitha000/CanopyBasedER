@@ -10,14 +10,16 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import DataStuctures.RecordIDs;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 /**
  *
  * @author JanithaT
  */
-public class RecordIndex {
+public class RecordIndex implements Serializable{
     public Map<Entity,ArrayList> RI = new HashMap<Entity,ArrayList>();
+    private static final long serialVersionUID = 1113799434508678000L;
     
     public void appendEntity(Entity entity){
         
@@ -27,6 +29,7 @@ public class RecordIndex {
     }
     
     public void appendRecord(Entity entity, String RecordID){
+        System.out.println("CAAAMEEE HERE");
         ArrayList<String> recordIDs  = RI.get(entity);
         recordIDs.add(RecordID);
         RI.put(entity,recordIDs);
@@ -39,9 +42,10 @@ public class RecordIndex {
     }
     
     public Boolean hasEntity(Entity entity){
-        
-        return RI.containsKey(entity);
+         return RI.containsKey(entity);
     }
+    
+    
     
     public Map<Entity,ArrayList> getRecordIndex(){
         return RI;

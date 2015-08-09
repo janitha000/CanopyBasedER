@@ -5,6 +5,7 @@
  */
 package Indexes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +14,9 @@ import java.util.Map;
  *
  * @author JanithaT
  */
-public class EntityIndex {
+public class EntityIndex implements Serializable{
     public Map<String,ArrayList> EI = new HashMap<String, ArrayList>();
+    private static final long serialVersionUID = 1113799434508677000L;
     
     public void createBlock(String recordID, int blockID){
        

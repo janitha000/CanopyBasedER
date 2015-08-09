@@ -5,11 +5,13 @@
  */
 package DataStuctures;
 
+import java.io.Serializable;
+
 /**
  *
  * @author JanithaT
  */
-public class Entity {
+public class Entity implements Serializable{
 
    private String recordID;
    private String firstName;
@@ -66,16 +68,24 @@ public class Entity {
     
     @Override
     public boolean equals(Object obj) {
+        
         if (obj == null) {
+            //System.out.println("Object is null");
             return false;
         }
         if (getClass() != obj.getClass()) {
+            //System.out.println("not same class");
             return false;
         }
         final Entity other = (Entity) obj;
-        if (!(other.getFirstName() == getFirstName())
-                || !(other.getLastName()== getLastName())
-                || !(other.getCity()== getCity())) {
+//        System.out.println(other.getRecordID() + " Other " + getRecordID() );
+//        System.out.println(other.getFirstName()+ " Other " + getFirstName() + !(other.getFirstName() == getFirstName()));
+//        System.out.println(other.getLastName()+ " Other " + getLastName() + !(other.getLastName()== getLastName()));
+//        System.out.println(other.getCity()+ " Other " + getCity() + !(other.getCity()== getCity()));
+        if (!(other.getFirstName() == null ? getFirstName() == null : other.getFirstName().equals(getFirstName()))
+                || !(other.getLastName() == null ? getLastName() == null : other.getLastName().equals(getLastName()))
+                || !(other.getCity() == null ? getCity() == null : other.getCity().equals(getCity()))) {
+            //System.out.println("Attributes are different");
             return false;
         }
         return true;
