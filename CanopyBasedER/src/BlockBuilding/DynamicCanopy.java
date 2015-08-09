@@ -10,6 +10,7 @@ import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Indexes.RIndex;
 import Indexes.RecordIndex;
+import Utilities.JaccardSimilarity;
 import Utilities.Serialization;
 import Utilities.mySqlConnection;
 import java.sql.SQLException;
@@ -42,6 +43,7 @@ public class DynamicCanopy {
     }
     
     public void AddToCanopy(Entity entity){
+        ri.appendEntity(entity);
         Entity = entity;
         if(RI.hasEntity(Entity)){
             if(!RI.getDuplicates(Entity).contains(Entity.getRecordID())){       //not needed if same record ID not comes again
@@ -50,14 +52,31 @@ public class DynamicCanopy {
             }
         } else {
             RI.appendEntity(Entity);
-            int blockID = CI.getLastIndex();
-            ArrayList<String> ids = new ArrayList<>();
+            int blockID = CI.getLastIndex() +1;
+            ArrayList<Integer> ids = new ArrayList<>();
+            Boolean added = false;
             
             Iterator itr = CI.keys().iterator();
             while(itr.hasNext()){
-                String recID =  CI.canopyRecordID((int) itr.next());
+                int currentBlockID = (int) itr.next();
+                String recID =  CI.canopyRecordID(currentBlockID);
                 Entity currentEntity = ri.getRecord(recID);
-                System.out.println(currentEntity.getFirstName());
+                double similarity = getSimilarity(Entity, currentEntity);
+                
+                if (t1 <= similarity) {
+                    ids.add(currentBlockID);
+                    //ids.add(currentEntity.getRecordID());
+                }
+
+                // Removal threshold:
+                if (t2 <= similarity) {
+                    CI.appendToBlock(blockID, entity.getRecordID());
+                    EI.createBlock(recID, blockID);
+                    added = true;
+                    break;
+                }
+                
+                
                 
                 //*********************************
                 
@@ -78,10 +97,28 @@ public class DynamicCanopy {
                 
                 */
             }
+            if(!added){
+                for (int blocksID : ids) {
+                    CI.appendToBlock(blocksID,entity.getRecordID());
+                    EI.appendToBlock(entity.getRecordID(), blocksID);
+                }
+            }
+            
         }
-                    
         
+        
+           Serialization.storeSerializedObject(RI, "E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");         
+           Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser"); 
+           Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser"); 
+           Serialization.storeSerializedObject(ri, "E:\\4th Year\\Research\\Imp\\Indexes\\rri.ser"); 
         
         
     }
+    
+    public double getSimilarity(Entity entity1, Entity entity2){
+            double sim1 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getFirstName().split(""), entity2.getFirstName().split(""));
+            double sim2 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getLastName().split(""), entity2.getLastName().split(""));
+          
+            return 0.7 * sim1 + 0.3 * sim2;
+        }
 }
