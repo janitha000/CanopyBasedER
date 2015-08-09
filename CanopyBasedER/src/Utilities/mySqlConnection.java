@@ -5,8 +5,10 @@
  */
 package Utilities;
 
+import DataStuctures.Entity;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,6 +55,31 @@ public class mySqlConnection {
       }
       
              conn.close();  
+       }
+       
+       public Entity getRecord(String recordID) throws SQLException{
+           
+           Connection conn = null;
+           conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
+           //String query = "SELECT * FROM " +tableName + " WHERE RecordID = 'AAA'";
+           String query = "SELECT * FROM " + tableName + " WHERE RecordID = '" + recordID + "'" ;
+            PreparedStatement prepStmt = conn.prepareStatement(query);
+            //prepStmt.setString(1, recordID);
+            ResultSet rs = prepStmt.executeQuery(query);
+            Entity entity = null;
+            //while (rs.next()){ 
+                entity.setFirstName(rs.getString("FirstName"));
+                entity.setLastName(rs.getString("LastName"));
+                entity.setCity(rs.getString("City"));
+                entity.setRecordID(recordID);
+        
+         
+            // print the results
+           //System.out.format("%s, %s, %s\n",  firstName, lastName, city);
+      
+           
+             conn.close();  
+            return entity;
        }
        /*public static void main(String[] args) throws SQLException {
            mySqlConnection connecton = new mySqlConnection("researchtest", "root", "jibtennakoon", "person");

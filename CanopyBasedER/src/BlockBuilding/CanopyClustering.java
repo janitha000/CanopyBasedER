@@ -8,6 +8,7 @@ package BlockBuilding;
 import DataStuctures.Entity;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
+import Indexes.RIndex;
 import Indexes.RecordIndex;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +25,7 @@ public class CanopyClustering {
     CanopyIndex CI;
     EntityIndex EI;
     RecordIndex RI;
+    RIndex ri;
     int noOfRecords;
     List<Entity> records;
     private final double t1;
@@ -36,6 +38,7 @@ public class CanopyClustering {
         CI = new CanopyIndex();
         EI = new EntityIndex();
         RI = new RecordIndex();
+        ri = new RIndex();
         noOfRecords = Erecords.size();
         t1 = T1;
         t2 = T2;
@@ -44,9 +47,11 @@ public class CanopyClustering {
         public void createCanopies(){
         blockID = 1;
         while(!records.isEmpty()){
+            
             Iterator iter = records.iterator();
             Entity firstEntity = (Entity) iter.next();
             String recordID = firstEntity.getRecordID();
+            ri.appendEntity(firstEntity);
 //            if(RI.hasEntity(firstEntity)){
 //                if(!RI.getDuplicates(firstEntity).contains(recordID)){
 //                    RI.appendRecord(firstEntity, recordID);
@@ -103,6 +108,7 @@ public class CanopyClustering {
                 // Removal threshold:
                 if (t2 <= similarity) {
                     iter.remove();
+                    ri.appendEntity(currentEntity);
                     //records.remove(currentEntity);
                     
                 }
@@ -115,6 +121,8 @@ public class CanopyClustering {
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         Serialization.storeSerializedObject(RI, "E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
+        Serialization.storeSerializedObject(ri, "E:\\4th Year\\Research\\Imp\\Indexes\\rii.ser");
+        ri.printIndex();
         RI.printIndex();
         CI.printIndex();
         EI.printIndex();
