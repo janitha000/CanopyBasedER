@@ -66,6 +66,12 @@ public class CanopyIndex implements Serializable, CanopyIndexInterface{
     }
     
     @Override
+    public ArrayList getEntityList(int blockID){
+        ArrayList<String> blockIDs = CI.get(blockID);
+        return blockIDs;
+    }
+    
+    @Override
     public void printIndex(){
         System.out.println("CANOPY INDEX");
         CI.entrySet().stream().forEach((entry) -> {

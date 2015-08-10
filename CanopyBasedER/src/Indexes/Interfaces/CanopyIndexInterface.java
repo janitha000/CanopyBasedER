@@ -21,4 +21,5 @@ public interface CanopyIndexInterface {
      public Set keys();
      public String canopyRecordID(int blockID);
      public void printIndex();
+     public ArrayList getEntityList(int blockID);
 }

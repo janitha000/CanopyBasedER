@@ -5,6 +5,8 @@
  */
 package Indexes.Interfaces;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author JanithaT
@@ -14,6 +16,7 @@ public interface EntityIndexInterface {
     public void appendToBlock(String recordID, int blockID);
     public Boolean hasBlock(String recordID);
     public void printIndex();
+    public ArrayList getBlockList(String recID);
     
     
 }

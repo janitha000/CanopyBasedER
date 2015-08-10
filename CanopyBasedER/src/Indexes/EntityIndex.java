@@ -5,6 +5,7 @@
  */
 package Indexes;
 
+import DataStuctures.Entity;
 import Indexes.Interfaces.EntityIndexInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +44,12 @@ public class EntityIndex implements Serializable, EntityIndexInterface{
     @Override
     public Boolean hasBlock(String recordID){
         return EI.containsKey(recordID);
+    }
+    
+    @Override
+    public ArrayList getBlockList(String recID){
+        ArrayList<Integer> blockIDs = EI.get(recID);
+        return blockIDs;
     }
     
     @Override

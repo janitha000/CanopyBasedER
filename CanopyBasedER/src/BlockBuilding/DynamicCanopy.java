@@ -71,7 +71,7 @@ public class DynamicCanopy {
                 // Removal threshold:
                 if (t2 <= similarity) {
                     CI.appendToBlock(blockID, entity.getRecordID());
-                    EI.createBlock(recID, blockID);
+                    EI.appendToBlock(recID, blockID);
                     added = true;
                     break;
                 }
