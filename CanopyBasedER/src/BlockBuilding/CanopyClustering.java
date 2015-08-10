@@ -10,6 +10,7 @@ import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Indexes.RIndex;
 import Indexes.RecordIndex;
+import SimilarityFunctions.CanopySimilarity;
 import java.util.Iterator;
 import java.util.List;
 import Utilities.JaccardSimilarity;
@@ -96,7 +97,9 @@ public class CanopyClustering {
                     }
                 }
                    
-                double similarity = getSimilarity(firstEntity, currentEntity);
+                double similarity;
+                similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3);
+                
                 
                 
                 if (t1 <= similarity) {

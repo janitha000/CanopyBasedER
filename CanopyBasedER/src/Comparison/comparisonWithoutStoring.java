@@ -12,6 +12,7 @@ import Indexes.Interfaces.CanopyIndexInterface;
 import Indexes.Interfaces.EntityIndexInterface;
 import Indexes.Interfaces.RIndexInterface;
 import Indexes.RIndex;
+import SimilarityFunctions.EntitySimilarity;
 import Utilities.JaccardSimilarity;
 import java.util.ArrayList;
 
@@ -39,7 +40,7 @@ public class comparisonWithoutStoring {
         for (Integer block : blocks) {
             ArrayList<Entity> entities = getEntities(block);
             for (Entity entity : entities) {
-                if(getSimilarity(OriginalEntity, entity) > T1){
+                if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
                     results.add(entity);
                 }
             }
@@ -67,11 +68,5 @@ public class comparisonWithoutStoring {
         return entities;
     }
     
-    public double getSimilarity(Entity entity1, Entity entity2){
-        double sim1 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getFirstName().split(""), entity2.getFirstName().split(""));
-        double sim2 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getLastName().split(""), entity2.getLastName().split(""));
-        double sim3 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getCity().split(""), entity2.getCity().split(""));
-        
-            return 0.6 * sim1 + 0.3 * sim2 + 0.1 * sim3;
-    }
+    
 }
