@@ -5,6 +5,7 @@
  */
 package Indexes;
 
+import Indexes.Interfaces.EntityIndexInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,17 +15,18 @@ import java.util.Map;
  *
  * @author JanithaT
  */
-public class EntityIndex implements Serializable{
+public class EntityIndex implements Serializable, EntityIndexInterface{
     public Map<String,ArrayList> EI = new HashMap<String, ArrayList>();
     private static final long serialVersionUID = 1113799434508677000L;
     
-    public void createBlock(String recordID, int blockID){
-       
-        ArrayList<Integer> blockIDs = new ArrayList<>();
-        blockIDs.add(blockID);
-        EI.put(recordID, blockIDs);
-    }
+//    public void createBlock(String recordID, int blockID){
+//       
+//        ArrayList<Integer> blockIDs = new ArrayList<>();
+//        blockIDs.add(blockID);
+//        EI.put(recordID, blockIDs);
+//    }
     
+    @Override
     public void appendToBlock(String recordID, int blockID){
         if(!EI.containsKey(recordID)){
             ArrayList<Integer> blockIDs = new ArrayList<>();
@@ -38,10 +40,12 @@ public class EntityIndex implements Serializable{
     
     }
     
+    @Override
     public Boolean hasBlock(String recordID){
         return EI.containsKey(recordID);
     }
     
+    @Override
     public void printIndex(){
         System.out.println("ENTITY INDEX");
         EI.entrySet().stream().forEach((entry) -> {

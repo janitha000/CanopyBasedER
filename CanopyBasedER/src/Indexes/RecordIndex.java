@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import DataStuctures.RecordIDs;
+import Indexes.Interfaces.RecordIndexInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,10 +18,11 @@ import java.util.Arrays;
  *
  * @author JanithaT
  */
-public class RecordIndex implements Serializable{
+public class RecordIndex implements Serializable, RecordIndexInterface{
     public Map<Entity,ArrayList> RI = new HashMap<Entity,ArrayList>();
     private static final long serialVersionUID = 1113799434508678000L;
     
+    @Override
     public void appendEntity(Entity entity){
         
         ArrayList<String> recordIDs = new ArrayList<>();
@@ -28,6 +30,7 @@ public class RecordIndex implements Serializable{
         RI.put(entity, recordIDs);
     }
     
+    @Override
     public void appendRecord(Entity entity, String RecordID){
         System.out.println("CAAAMEEE HERE");
         ArrayList<String> recordIDs  = RI.get(entity);
@@ -36,21 +39,25 @@ public class RecordIndex implements Serializable{
         
     }
     
+    @Override
     public ArrayList getDuplicates(Entity entity){
         ArrayList<String> IDs = RI.get(entity);
         return IDs;
     }
     
+    @Override
     public Boolean hasEntity(Entity entity){
          return RI.containsKey(entity);
     }
     
     
     
+    @Override
     public Map<Entity,ArrayList> getRecordIndex(){
         return RI;
     }
     
+    @Override
     public void printIndex(){
         System.out.println("RECORD INDEX");
         RI.entrySet().stream().forEach((entry) -> {
