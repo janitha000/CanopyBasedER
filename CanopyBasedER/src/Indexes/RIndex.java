@@ -22,6 +22,7 @@ public class RIndex implements Serializable{
     public void appendEntity(Entity entity){
         
         RI.put(entity.getRecordID(),entity);
+        System.out.println("CAME " + entity.getRecordID());
     }
     
     public Entity getRecord(String recordID){
