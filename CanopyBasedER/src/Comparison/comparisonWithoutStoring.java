@@ -6,6 +6,7 @@
 package Comparison;
 
 import BlockEfficiency.ComparisonPropagation;
+import BlockEfficiency.ComparisonScheduling;
 import DataStuctures.Entity;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
@@ -27,6 +28,7 @@ public class comparisonWithoutStoring {
     RIndexInterface ri;
     String recID;
     double T1;
+    ComparisonScheduling CS;
     
     public ArrayList<Entity> getSimilarRecords(CanopyIndex CIndex, EntityIndex EIndex, RIndex RIndex, String recordID, double t1){
         CI = CIndex;
@@ -35,17 +37,19 @@ public class comparisonWithoutStoring {
         T1 = t1;
         recID = recordID;
         ComparisonPropagation pp = new ComparisonPropagation();
+        CS = new ComparisonScheduling();
         Entity OriginalEntity = ri.getRecord(recID);
         ArrayList<Entity> results = new ArrayList<>();
         
         ArrayList<Integer> blocks = EI.getBlockList(recID);
         for (Integer block : blocks) {
+            //ArrayList<Entity> entities = getEntityWithSceduling(blocks, block);
             ArrayList<Entity> entities = getEntities(block);
             for (Entity entity : entities) {
                 if(pp.getLeastCommonIndex(OriginalEntity.getRecordID(), entity.getRecordID(), EIndex) >= block ){
-                if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
-                    results.add(entity);
-                }
+                    if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
+                        results.add(entity);
+                    }
                 }
             }
         }
@@ -72,5 +76,17 @@ public class comparisonWithoutStoring {
         return entities;
     }
     
+    public ArrayList<Entity> getEntityWithSceduling(ArrayList<Integer> blocks, int blockID){
+        
+        ArrayList<Entity> entities=new ArrayList<>();
+        ArrayList<String> ids = CI.getEntityList(blockID);
+        
+        ArrayList<String> Scheduled = CS.scheduledRecords(blocks,ids, (EntityIndex) EI);
+        
+        for (String Scheduled1 : Scheduled) {
+            entities.add(ri.getRecord(Scheduled1));
+        }
+        return entities;
+    }
     
 }
