@@ -9,6 +9,7 @@ import DataStuctures.Entity;
 import Indexes.Interfaces.EntityIndexInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +51,10 @@ public class EntityIndex implements Serializable, EntityIndexInterface{
     public ArrayList getBlockList(String recID){
         ArrayList<Integer> blockIDs = EI.get(recID);
         return blockIDs;
+    }
+    
+    public void sort(String recID){
+        Collections.sort(EI.get(recID));
     }
     
     @Override

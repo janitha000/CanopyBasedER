@@ -24,7 +24,7 @@ public class RIndex implements Serializable,RIndexInterface{
     public void appendEntity(Entity entity){
         
         RI.put(entity.getRecordID(),entity);
-        System.out.println("CAME " + entity.getRecordID());
+        //System.out.println("CAME " + entity.getRecordID());
     }
     
     @Override

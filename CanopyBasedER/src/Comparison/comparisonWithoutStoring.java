@@ -5,6 +5,7 @@
  */
 package Comparison;
 
+import BlockEfficiency.ComparisonPropagation;
 import DataStuctures.Entity;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
@@ -33,6 +34,7 @@ public class comparisonWithoutStoring {
         ri = RIndex;
         T1 = t1;
         recID = recordID;
+        ComparisonPropagation pp = new ComparisonPropagation();
         Entity OriginalEntity = ri.getRecord(recID);
         ArrayList<Entity> results = new ArrayList<>();
         
@@ -40,8 +42,10 @@ public class comparisonWithoutStoring {
         for (Integer block : blocks) {
             ArrayList<Entity> entities = getEntities(block);
             for (Entity entity : entities) {
+                if(pp.getLeastCommonIndex(OriginalEntity.getRecordID(), entity.getRecordID(), EIndex) >= block ){
                 if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
                     results.add(entity);
+                }
                 }
             }
         }

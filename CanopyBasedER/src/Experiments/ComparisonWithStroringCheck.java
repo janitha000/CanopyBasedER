@@ -38,9 +38,10 @@ public class ComparisonWithStroringCheck {
         SI = (SimilarityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SI.ser");
         
         ComparisonWithStoring cc = new ComparisonWithStoring();
-        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, ri, SI, "AAB" , 0.7);
+        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, ri, SI, "000000457600" , 0.8);
+        
         for (Entity result : results) {
-            System.out.println(result.getRecordID());
+            System.out.println(result.getRecordID() + " " +result.getFirstName()+ " " + result.getLastName()+ " " + result.getCity());
         }
         SI.printIndex();
         long stopTime = System.currentTimeMillis();

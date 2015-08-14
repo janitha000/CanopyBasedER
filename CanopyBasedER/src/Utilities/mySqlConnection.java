@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,10 +34,12 @@ public class mySqlConnection {
          PASS = pwd;
          tableName = table;
     }
-       public void getData() throws SQLException{
+       public List<Entity> getData() throws SQLException{
+           List<Entity> test = new ArrayList<Entity>();
+           
            Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName;
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 500";
               
              // create the java statement
       Statement st = conn.createStatement();
@@ -45,16 +49,19 @@ public class mySqlConnection {
        
       // iterate through the java resultset
       while (rs.next()){ 
-        String firstName = rs.getString("FirstName");
-        String lastName = rs.getString("LastName");
-        String city = rs.getString("City");
-        
+//         en.setRecordID(rs.getString("RecordID"));
+//         en.setFirstName(rs.getString("FirstName"));
+//         en.setLastName(rs.getString("LastName"));
+//         en.setCity(rs.getString("City"));
+         
+         Boolean add = test.add(new Entity(rs.getString("RecordID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
          
         // print the results
-        System.out.format("%s, %s, %s\n",  firstName, lastName, city);
+       // System.out.format("%s, %s, %s\n",  firstName, lastName, city);
       }
-      
+               
              conn.close();  
+           return test;
        }
        
        public Entity getRecord(String recordID) throws SQLException{

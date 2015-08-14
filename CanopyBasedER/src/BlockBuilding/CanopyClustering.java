@@ -48,7 +48,7 @@ public class CanopyClustering {
         public void createCanopies(){
         blockID = 1;
         while(!records.isEmpty()){
-            
+            long startTime = System.currentTimeMillis();
             Iterator iter = records.iterator();
             Entity firstEntity = (Entity) iter.next();
             String recordID = firstEntity.getRecordID();
@@ -73,10 +73,12 @@ public class CanopyClustering {
             CI.createBlock(blockID, recordID);
             EI.appendToBlock(recordID, blockID);
             //ArrayList<String> ids = new ArrayList<String>();
-                       
+              int id=0;         
             while (iter.hasNext()) {
+                
                 Entity currentEntity = (Entity) iter.next();
                 String currentID = currentEntity.getRecordID();
+                id++;
 //                if(RI.hasEntity(currentEntity)){
 //                    System.out.println("CAMR TO EQUAL " + currentID);
 //                    if(!RI.getDuplicates(currentEntity).contains(recordID)){
@@ -99,12 +101,13 @@ public class CanopyClustering {
                    
                 double similarity;
                 similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3);
-                
+                //System.out.println("Checking "+ currentEntity.getFirstName() + " "+ id);
                 
                 
                 if (t1 <= similarity) {
                     CI.appendToBlock(blockID, currentID);
                     EI.appendToBlock(currentID, blockID);
+                    EI.sort(currentID);
                     //ids.add(currentEntity.getRecordID());
                 }
 
@@ -115,10 +118,14 @@ public class CanopyClustering {
                     //records.remove(currentEntity);
                     
                 }
+                
             }
             
             //CI.appendToBlockAyyayList(blockID, ids);
             CI.setLastIndex(blockID);
+            long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println(" Elapsed time is " +elapsedTime);
             blockID++;
         }
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");

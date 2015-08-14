@@ -32,7 +32,7 @@ public class RecordIndex implements Serializable, RecordIndexInterface{
     
     @Override
     public void appendRecord(Entity entity, String RecordID){
-        System.out.println("CAAAMEEE HERE");
+        //System.out.println("CAAAMEEE HERE");
         ArrayList<String> recordIDs  = RI.get(entity);
         recordIDs.add(RecordID);
         RI.put(entity,recordIDs);
