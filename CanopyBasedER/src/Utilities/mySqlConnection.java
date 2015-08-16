@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,13 +36,39 @@ public class mySqlConnection {
          tableName = table;
     }
         
-      
+      public HashMap<String,Entity> getInvertedIndexData() throws SQLException{
+          HashMap<String,Entity> test = new HashMap<>();
+          Connection conn = null;
+           conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 40000";
+           Statement st = conn.createStatement();
+       
+      // execute the query, and get a java resultset
+      ResultSet rs = st.executeQuery(query);
+       
+      // iterate through the java resultset
+      while (rs.next()){ 
+//         en.setRecordID(rs.getString("RecordID"));
+//         en.setFirstName(rs.getString("FirstName"));
+//         en.setLastName(rs.getString("LastName"));
+//         en.setCity(rs.getString("City"));
+         test.put(rs.getString("RecordID"), new Entity(rs.getString("RecordID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
+         
+        // print the results
+       // System.out.format("%s, %s, %s\n",  firstName, lastName, city);
+      }
+               
+             conn.close();  
+           return test;
+           
+           
+      }
        public List<Entity> getData() throws SQLException{
            List<Entity> test = new ArrayList<Entity>();
            
            Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 400000";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 40000";
               
              // create the java statement
       Statement st = conn.createStatement();

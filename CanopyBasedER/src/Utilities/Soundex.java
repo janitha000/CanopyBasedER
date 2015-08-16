@@ -46,6 +46,8 @@ public static String soundex(String s){
   return soundex;
 }
 
-
+    public static void main(String[] args) {
+        System.out.println(Soundex.soundex("Evans")); 
+    }
 
 }

@@ -132,8 +132,8 @@ public class CanopyClustering {
         Serialization.storeSerializedObject(RI, "E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
         Serialization.storeSerializedObject(ri, "E:\\4th Year\\Research\\Imp\\Indexes\\rii.ser");
-        ri.printIndex();
-        RI.printIndex();
+        //ri.printIndex();
+        //RI.printIndex();
         CI.printIndex();
         EI.printIndex();
         

@@ -31,6 +31,8 @@ public class InvertedSoundex {
             String key = Soundex.soundex(en.getFirstName());
             if(SoundexIndex.containsKey(key)){
                temp= SoundexIndex.get(key);
+//               if(en.getRecordID().equals("000000007231"))
+//                    System.out.println("");
                 temp.add(en.getRecordID());
                 SoundexIndex.put(key, temp);
                 
@@ -39,6 +41,7 @@ public class InvertedSoundex {
                 createNewBlock(key);
             }
         }
+        //Print();
         return SoundexIndex;
         
     }
@@ -50,7 +53,9 @@ public class InvertedSoundex {
     }
     
     
-    
+    public ArrayList<String> getCandidates(String key){
+        return SoundexIndex.get(key);
+    }
     
     
     public  List<Entity> getRecords(){
@@ -74,7 +79,7 @@ public class InvertedSoundex {
         System.out.println("Soundex INDEX");
       
         SoundexIndex.entrySet().stream().forEach((entry) -> {
-            System.out.print("Key : " + entry.getKey());
+            System.out.println("Key : " + entry.getKey());//+ " " + entry.getValue().size());
             ArrayList<String> list = entry.getValue();
             for (String record : list) {
                 System.out.print(" " + record);
