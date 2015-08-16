@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BlockBuilding;
+package BlockBuilding.Soundex;
 
 /**
  *
  * @author JanithaT
  */
-public class AbstractCanopyClustering {
+public class CanopyBuilding {
     
 }

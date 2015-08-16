@@ -31,7 +31,7 @@ public class NGram {
     }
     
     public static void main(String[] args) {
-        for (String ngram : ngrams(2, "JanithaTennakoon"))
+        for (String ngram : ngrams(3, "abcdefghijklmnopqrstuv"))
                 System.out.println(ngram);
             System.out.println();
         }

@@ -34,6 +34,8 @@ public class mySqlConnection {
          PASS = pwd;
          tableName = table;
     }
+        
+      
        public List<Entity> getData() throws SQLException{
            List<Entity> test = new ArrayList<Entity>();
            
