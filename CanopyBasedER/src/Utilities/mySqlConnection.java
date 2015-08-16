@@ -39,7 +39,7 @@ public class mySqlConnection {
            
            Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 500";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 400000";
               
              // create the java statement
       Statement st = conn.createStatement();
