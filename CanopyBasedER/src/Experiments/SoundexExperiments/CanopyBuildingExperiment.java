@@ -27,7 +27,7 @@ public class CanopyBuildingExperiment {
      long startTime = System.currentTimeMillis();
         //CI = new CanopyIndex();
         HashMap<String,Entity> test = new HashMap<>();
-        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "csvimport");
+        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
                 try {
                  
                     test = connecton.getInvertedIndexData();

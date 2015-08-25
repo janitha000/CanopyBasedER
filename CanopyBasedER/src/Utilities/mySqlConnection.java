@@ -52,7 +52,7 @@ public class mySqlConnection {
 //         en.setFirstName(rs.getString("FirstName"));
 //         en.setLastName(rs.getString("LastName"));
 //         en.setCity(rs.getString("City"));
-         test.put(rs.getString("RecordID"), new Entity(rs.getString("RecordID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
+         test.put(rs.getString("RecID"), new Entity(rs.getString("RecID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
          
         // print the results
        // System.out.format("%s, %s, %s\n",  firstName, lastName, city);
@@ -83,7 +83,7 @@ public class mySqlConnection {
 //         en.setLastName(rs.getString("LastName"));
 //         en.setCity(rs.getString("City"));
          
-         Boolean add = test.add(new Entity(rs.getString("RecordID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
+         Boolean add = test.add(new Entity(rs.getString("RecID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
          
         // print the results
        // System.out.format("%s, %s, %s\n",  firstName, lastName, city);

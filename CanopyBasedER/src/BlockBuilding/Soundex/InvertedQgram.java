@@ -7,7 +7,7 @@ package BlockBuilding.Soundex;
 
 import DataStuctures.Entity;
 import Experiments.BlockBuildongWithSQLCHECK;
-import Utilities.Soundex;
+import Utilities.NGram;
 import Utilities.mySqlConnection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,44 +21,39 @@ import java.util.logging.Logger;
  *
  * @author JanithaT
  */
-public class InvertedSoundex {
-    public Map<String,ArrayList> SoundexIndex = new HashMap<String, ArrayList>();
-   
-    public Map<String, ArrayList> getSoundexIndex(){
+public class InvertedQgram {
+    public Map<String,ArrayList> QgramIndex = new HashMap<String, ArrayList>();
+    
+    public Map<String, ArrayList> getQgramIndex(){
         List<Entity> Dataset = getRecords();
         ArrayList<String> temp = new ArrayList<>();
         for (Entity en : Dataset) {
-            String key = Soundex.soundex(en.getFirstName());
-            if(SoundexIndex.containsKey(key)){
-               temp= SoundexIndex.get(key);
-//               if(en.getRecordID().equals("000000007231"))
-//                    System.out.println("");
-                temp.add(en.getRecordID());
-                SoundexIndex.put(key, temp);
-                
-            }
-            else {
-                createNewBlock(key);
+            List<String> keys = NGram.ngrams(3, en.getCity());
+            for (String key : keys) {
+                if(QgramIndex.containsKey(key)){
+                    temp = QgramIndex.get(key);
+                    temp.add(en.getRecordID());
+                    QgramIndex.put(key, temp);
+                }
+                else {
+                    createNewBlock(key);
+                }
             }
         }
-       // Print();
-        return SoundexIndex;
+        return QgramIndex;
         
     }
     
-    
     public void createNewBlock(String key){
         ArrayList<String> values = new ArrayList<>();
-        SoundexIndex.put(key, values);
+        QgramIndex.put(key, values);
     }
-    
     
     public ArrayList<String> getCandidates(String key){
-        return SoundexIndex.get(key);
+        return QgramIndex.get(key);
     }
     
-    
-    public  List<Entity> getRecords(){
+     public  List<Entity> getRecords(){
     List<Entity> test = new ArrayList<Entity>();
         mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
                 try {
@@ -74,11 +69,11 @@ public class InvertedSoundex {
                 }
           return test;      
     }
-    
-    public void Print(){
+     
+     public void Print(){
         System.out.println("Soundex INDEX");
       
-        SoundexIndex.entrySet().stream().forEach((entry) -> {
+        QgramIndex.entrySet().stream().forEach((entry) -> {
             System.out.println("Key : " + entry.getKey());//+ " " + entry.getValue().size());
             ArrayList<String> list = entry.getValue();
             for (String record : list) {
@@ -89,10 +84,12 @@ public class InvertedSoundex {
             //System.out.println(entry.getKey().hashCode());
         });
     }
-    
-    public static void main(String[] args) {
-        InvertedSoundex IS = new InvertedSoundex();
-        IS.getSoundexIndex();
-        IS.Print();
+     
+     public static void main(String[] args) {
+        InvertedQgram IQ = new InvertedQgram();
+        IQ.getQgramIndex();
+        IQ.Print();
     }
 }
+
+

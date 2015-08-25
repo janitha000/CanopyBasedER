@@ -125,7 +125,7 @@ public class CanopyClustering {
             CI.setLastIndex(blockID);
             long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        System.out.println(" Elapsed time is " +elapsedTime);
+        //System.out.println(" Elapsed time is " +elapsedTime);
             blockID++;
         }
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");

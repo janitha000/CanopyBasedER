@@ -55,10 +55,11 @@ public class CanopyBuilding {
         int id = 1;
         blockID = 1;
         HashMap<String,Entity> candidateEntitiyIndex = getcandidateEntities();
+        long startTime = System.currentTimeMillis();
         while(!records.isEmpty()){
             
-            long startTime = System.currentTimeMillis();
-            System.out.print("ID "+ id);
+            //long startTime = System.currentTimeMillis();
+            //System.out.print("ID "+ id);
             Iterator iter = records.entrySet().iterator();
             Map.Entry pair = (Map.Entry)iter.next();
             Entity firstEntity = (Entity) pair.getValue();
@@ -70,6 +71,8 @@ public class CanopyBuilding {
             EI.appendToBlock(recordID, blockID);
             
             String key = Soundex.soundex(firstEntity.getFirstName());
+            
+           
             soundexI.getCandidates(key).remove(recordID);
             ArrayList<String> candidates = soundexI.getCandidates(key);
             ArrayList<Entity> candidateEntites = new ArrayList<>();
@@ -79,7 +82,7 @@ public class CanopyBuilding {
             for (String candidateEntite : candidates) {
                 Entity currentEntity = records.get(candidateEntite);
                 if(currentEntity == null){
-                    System.out.println("");
+                    continue;
                 }
                 //System.out.println(currentEntity.getRecordID());
                 if(candidateEntite.equals(recordID)){
@@ -152,7 +155,10 @@ public class CanopyBuilding {
             blockID++;
             long stopTime = System.currentTimeMillis();
             long elapsedTime = stopTime - startTime;
-            System.out.println(" Elapsed time is " +elapsedTime);
+            if(id % 10000 == 0){
+                System.out.println(" Elapsed time is " +elapsedTime/1000);
+                startTime = stopTime;
+            }
             id++;
             }
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
@@ -167,7 +173,7 @@ public class CanopyBuilding {
         
     public HashMap<String,Entity> getcandidateEntities(){
         HashMap<String,Entity> test = new HashMap<String, Entity>();
-         mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "csvimport");
+         mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
                 try {
                  
                     test = connecton.getInvertedIndexData();
