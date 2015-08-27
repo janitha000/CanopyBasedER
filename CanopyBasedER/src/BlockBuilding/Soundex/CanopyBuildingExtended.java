@@ -56,7 +56,8 @@ public class CanopyBuildingExtended {
         //IS = soundexI.getSoundexIndex("firstname");
         //SoundexIndexes.add(IS);
         
-        for (InvertedSoundex IS : II) {
+        
+            String key = null;
             soundexI = (InvertedSoundex) IS;
              String attribute = attr[attrID];
              HashMap<String,Entity> records = Erecords;
@@ -74,14 +75,19 @@ public class CanopyBuildingExtended {
                     CI.createBlock(blockID, recordID);
                     EI.appendToBlock(recordID, blockID);
                     
-                    String key = Soundex.soundex(firstEntity.getFirstName());
-                    soundexI.getCandidates(key).remove(recordID);
-                    
-                    ArrayList<String> candidates = soundexI.getCandidates(key);
-                    ArrayList<Entity> candidateEntites = new ArrayList<>();
-                    ArrayList<String> deletion = new ArrayList<>();
-                    
-                    for (String candidateEntite : candidates) {
+                    for(int i=0; i< attr.length; i++){
+                        if(i ==0)
+                            key= Soundex.soundex(firstEntity.getFirstName());
+                        if(i == 1)
+                            key= Soundex.soundex(firstEntity.getLastName());
+                        soundexI = II.get(i);
+                        soundexI.getCandidates(key).remove(recordID);
+                        
+                        ArrayList<String> candidates = soundexI.getCandidates(key);
+                        ArrayList<Entity> candidateEntites = new ArrayList<>();
+                        ArrayList<String> deletion = new ArrayList<>();
+                        
+                        for (String candidateEntite : candidates) {
                         Entity currentEntity = records.get(candidateEntite);
                         if(currentEntity == null){
                             continue;
@@ -95,6 +101,8 @@ public class CanopyBuildingExtended {
                          similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3,2);
 
                          if (t1 <= similarity) {
+                            if(CI.getEntityList(blockID).contains(currentID))
+                                continue;
                             CI.appendToBlock(blockID, currentID);
                             EI.appendToBlock(currentID, blockID);
                             EI.sort(currentID);
@@ -105,19 +113,18 @@ public class CanopyBuildingExtended {
                         if (t2 <= similarity) {
                             //records.remove(20);
 
-                            if(currentID.equals("000000007231")){
-                                System.out.println("");
-                            }
+                            
                             records.remove(currentID);
                             deletion.add(currentID);
 
                             }
 
                     }
-                    for (String deletion1 : deletion) {
-                        soundexI.getCandidates(key).remove(deletion1);
-                    }  
-                    
+                        for (String deletion1 : deletion) {
+                            soundexI.getCandidates(key).remove(deletion1);
+                        }
+                        
+                    }
                     CI.setLastIndex(blockID);
                     blockID++;
                     long stopTime = System.currentTimeMillis();
@@ -128,7 +135,8 @@ public class CanopyBuildingExtended {
                     }
                     id++;
                    }
-              }
+              attrID++;
+              
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");

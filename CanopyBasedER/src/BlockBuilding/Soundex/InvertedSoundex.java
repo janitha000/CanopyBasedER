@@ -83,26 +83,26 @@ public class InvertedSoundex {
     
     public  List<Entity> getRecords(){
     List<Entity> test = new ArrayList<Entity>();
-        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
-                try {
-                 
-                    test = connecton.getData();
-                    //for (Entity en : test) {
-                        //System.out.println("Record name " + en.getFirstName());
-                    //}
-                    
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(BlockBuildongWithSQLCHECK.class.getName()).log(Level.SEVERE, null, ex);
-                }
-    
-//        test.add(new Entity("AAA", "Janitha", "Tennakoon", "Kandy"));
-//        test.add(new Entity("AAB", "Vindya ", "Hemali", "Matara"));
-//        test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
-//        test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Galle"));
-//        test.add(new Entity("AAE", "Kavinda", "Herath", "Kandy"));
-//        test.add(new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
-//        test.add(new Entity("AAG", "Janith", "Tenna", "Kandy"));
+//        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
+//                try {
+//                 
+//                    test = connecton.getData();
+//                    //for (Entity en : test) {
+//                        //System.out.println("Record name " + en.getFirstName());
+//                    //}
+//                    
+//                    
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(BlockBuildongWithSQLCHECK.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//    
+        test.add(new Entity("AAA", "Janitha", "Tennakoon", "Kandy"));
+        test.add(new Entity("AAB", "Vindya ", "Hemali", "Matara"));
+        test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
+        test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Galle"));
+        test.add(new Entity("AAE", "Kavinda", "Herath", "Kandy"));
+        test.add(new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
+        test.add(new Entity("AAG", "Kosala", "Tennakoon", "Kandy"));
     
           return test;      
     }

@@ -40,25 +40,29 @@ public class mySqlConnection {
           HashMap<String,Entity> test = new HashMap<>();
           Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 10";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 50";
            Statement st = conn.createStatement();
        
       // execute the query, and get a java resultset
       ResultSet rs = st.executeQuery(query);
        
       // iterate through the java resultset
-      while (rs.next()){ 
-//         en.setRecordID(rs.getString("RecordID"));
-//         en.setFirstName(rs.getString("FirstName"));
-//         en.setLastName(rs.getString("LastName"));
-//         en.setCity(rs.getString("City"));
-         test.put(rs.getString("RecID"), new Entity(rs.getString("RecID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
+    //  while (rs.next()){ 
+
+        // test.put(rs.getString("RecID"), new Entity(rs.getString("RecID"), rs.getString("FirstName"), rs.getString("LastName"), rs.getString("City")));
          
         // print the results
        // System.out.format("%s, %s, %s\n",  firstName, lastName, city);
-      }
+    //  }
                
-             conn.close();  
+            // conn.close();  
+      test.put("AAA",new Entity("AAA", "Janitha", "Tennakoon", "Kandy"));
+        test.put("AAB",new Entity("AAB", "Vindya ", "Hemali", "Matara"));
+        test.put("AAC",new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
+        test.put("AAD",new Entity("AAD", "Nadeeka", "Wickramasinghe", "Galle"));
+        test.put("AAE",new Entity("AAE", "Kavinda", "Herath", "Kandy"));
+        test.put("AAF",new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
+        test.put("AAG",new Entity("AAG", "Kosala", "Tennaakoon", "Kandy"));
            return test;
            
            
@@ -68,7 +72,7 @@ public class mySqlConnection {
            
            Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 10";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 50";
               
              // create the java statement
       Statement st = conn.createStatement();
