@@ -24,7 +24,7 @@ public class ComparisonPropagation {
         for (Object blocks : blocks1) {
             for (Object bblocks : blocks2) {
                 if(blocks == bblocks){
-                    System.out.println(rec1 + " " + rec2 + " " + blocks);
+                    //System.out.println(rec1 + " " + rec2 + " " + blocks);
                     return (int) blocks;
                 }
             }

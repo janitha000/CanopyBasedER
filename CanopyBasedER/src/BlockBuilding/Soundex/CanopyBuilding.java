@@ -31,7 +31,8 @@ public class CanopyBuilding {
     CanopyIndex CI;
     EntityIndex EI;
     int noOfRecords;
-    ;
+    ArrayList<Map<String,ArrayList>> SoundexIndexes;
+    ArrayList<InvertedQgram> QgramIndexes;
     private final double t1;
     private final double t2;
     int blockID;
@@ -51,7 +52,8 @@ public class CanopyBuilding {
          HashMap<String,Entity> records = Erecords;
         noOfRecords = Erecords.size();
         InvertedSoundex soundexI = new InvertedSoundex();
-        IS = soundexI.getSoundexIndex();
+        IS = soundexI.getSoundexIndex("firstname");
+        //SoundexIndexes.add(IS);
         int id = 1;
         blockID = 1;
         HashMap<String,Entity> candidateEntitiyIndex = getcandidateEntities();
@@ -90,7 +92,7 @@ public class CanopyBuilding {
                 }
                 String currentID = currentEntity.getRecordID();
                 double similarity;
-                 similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3);
+                 similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3,2);
                 
                  if (t1 <= similarity) {
                     CI.appendToBlock(blockID, currentID);

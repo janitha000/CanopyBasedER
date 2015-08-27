@@ -40,7 +40,7 @@ public class mySqlConnection {
           HashMap<String,Entity> test = new HashMap<>();
           Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 40000";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 10";
            Statement st = conn.createStatement();
        
       // execute the query, and get a java resultset
@@ -68,7 +68,7 @@ public class mySqlConnection {
            
            Connection conn = null;
            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-           String query = "SELECT * FROM " +tableName + " LIMIT 0, 40000";
+           String query = "SELECT * FROM " +tableName + " LIMIT 0, 10";
               
              // create the java statement
       Statement st = conn.createStatement();

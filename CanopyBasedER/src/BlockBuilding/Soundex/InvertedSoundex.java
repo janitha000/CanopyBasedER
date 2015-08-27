@@ -24,31 +24,54 @@ import java.util.logging.Logger;
 public class InvertedSoundex {
     public Map<String,ArrayList> SoundexIndex = new HashMap<String, ArrayList>();
    
-    public Map<String, ArrayList> getSoundexIndex(){
+    public void /*Map<String, ArrayList>*/ getSoundexIndex(String attribute){
         List<Entity> Dataset = getRecords();
+       
         ArrayList<String> temp = new ArrayList<>();
-        for (Entity en : Dataset) {
-            String key = Soundex.soundex(en.getFirstName());
-            if(SoundexIndex.containsKey(key)){
-               temp= SoundexIndex.get(key);
-//               if(en.getRecordID().equals("000000007231"))
-//                    System.out.println("");
-                temp.add(en.getRecordID());
-                SoundexIndex.put(key, temp);
+        switch(attribute){
+            case "firstname":
+                for (Entity en : Dataset) {
+                    String key = Soundex.soundex(en.getFirstName());
+                    if(SoundexIndex.containsKey(key)){
+                        temp= SoundexIndex.get(key);
+                        temp.add(en.getRecordID());
+                        SoundexIndex.put(key, temp);
                 
-            }
-            else {
-                createNewBlock(key);
-            }
-        }
-       // Print();
-        return SoundexIndex;
+                     }
+                    else {
+                        createNewBlock(key, en.getRecordID());
+                    }
+                }
+                Print();
+                break;
         
-    }
+                //return SoundexIndex;
+            case "lastname":
+                for (Entity en : Dataset) {
+                    String key = Soundex.soundex(en.getLastName());
+                    if(SoundexIndex.containsKey(key)){
+                        temp= SoundexIndex.get(key);
+                        temp.add(en.getRecordID());
+                        SoundexIndex.put(key, temp);
+                
+                     }
+                    else {
+                        createNewBlock(key, en.getRecordID());
+                    }
+                }
+            Print();
+            break;
+                //return SoundexIndex;
+                }
+        
+        // return null;       
+        }
+        
     
     
-    public void createNewBlock(String key){
+    public void createNewBlock(String key, String recID){
         ArrayList<String> values = new ArrayList<>();
+        values.add(recID);
         SoundexIndex.put(key, values);
     }
     
@@ -72,6 +95,15 @@ public class InvertedSoundex {
                 } catch (SQLException ex) {
                     Logger.getLogger(BlockBuildongWithSQLCHECK.class.getName()).log(Level.SEVERE, null, ex);
                 }
+    
+//        test.add(new Entity("AAA", "Janitha", "Tennakoon", "Kandy"));
+//        test.add(new Entity("AAB", "Vindya ", "Hemali", "Matara"));
+//        test.add(new Entity("AAC", "Nadeeka", "Wickramasinghe", "Matara"));
+//        test.add(new Entity("AAD", "Nadeeka", "Wickramasinghe", "Galle"));
+//        test.add(new Entity("AAE", "Kavinda", "Herath", "Kandy"));
+//        test.add(new Entity("AAF", "Janith", "Tennakoon", "Kandy"));
+//        test.add(new Entity("AAG", "Janith", "Tenna", "Kandy"));
+    
           return test;      
     }
     
@@ -92,7 +124,7 @@ public class InvertedSoundex {
     
     public static void main(String[] args) {
         InvertedSoundex IS = new InvertedSoundex();
-        IS.getSoundexIndex();
+        IS.getSoundexIndex("l");
         IS.Print();
     }
 }
