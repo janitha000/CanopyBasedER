@@ -98,7 +98,7 @@ public class CanopyBuildingExtended {
                         }
                         String currentID = currentEntity.getRecordID();
                         double similarity;
-                         similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3,2);
+                         similarity = CanopySimilarity.getSimilarity(firstEntity, currentEntity, 0.7, 0.3,1);
 
                          if (t1 <= similarity) {
                             if(CI.getEntityList(blockID).contains(currentID))
@@ -125,11 +125,12 @@ public class CanopyBuildingExtended {
                         }
                         
                     }
+                    //System.out.println(id);
                     CI.setLastIndex(blockID);
                     blockID++;
                     long stopTime = System.currentTimeMillis();
                     long elapsedTime = stopTime - startTime;
-                    if(id % 10000 == 0){
+                    if(id % 1000 == 0){
                         System.out.println(" Elapsed time is " +elapsedTime/1000);
                         startTime = stopTime;
                     }

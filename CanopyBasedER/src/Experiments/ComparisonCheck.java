@@ -33,7 +33,7 @@ public class ComparisonCheck {
         ri = (RIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\rii.ser");
         
         comparisonWithoutStoring cc = new comparisonWithoutStoring();
-        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, ri, "1",0.7);
+        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, ri, "AAA",0.7);
         for (Entity result : results) {
             System.out.println("results "+ result.getRecordID() + " " + result.getFirstName()+ " " + result.getLastName());
         }

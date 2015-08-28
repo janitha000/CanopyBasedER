@@ -52,7 +52,7 @@ public class CanopyBuilding {
          HashMap<String,Entity> records = Erecords;
         noOfRecords = Erecords.size();
         InvertedSoundex soundexI = new InvertedSoundex();
-        IS = soundexI.getSoundexIndex("firstname");
+        soundexI.getSoundexIndex("firstname");
         //SoundexIndexes.add(IS);
         int id = 1;
         blockID = 1;
