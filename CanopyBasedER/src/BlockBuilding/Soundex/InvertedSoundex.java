@@ -34,10 +34,7 @@ public class InvertedSoundex implements Serializable {
         ArrayList<String> temp = new ArrayList<>();
         switch(attribute){
             case "firstname":
-                File f = new File("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
-                if(f.exists())
-                    SoundexIndex = (Map<String, ArrayList>) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
-                else {
+                
                     for (Entity en : Dataset) {
                         String key = Soundex.soundex(en.getFirstName());
                         if(SoundexIndex.containsKey(key)){
@@ -49,17 +46,14 @@ public class InvertedSoundex implements Serializable {
                         else {
                             createNewBlock(key, en.getRecordID());
                         }
-                    }
+                    
                 }
                 //Print();
                 break;
         
                 //return SoundexIndex;
             case "lastname":
-                File ff = new File("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
-                if(ff.exists())
-                    SoundexIndex = (Map<String, ArrayList>) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
-                else {
+                
                     for (Entity en : Dataset) {
                         String key = Soundex.soundex(en.getLastName());
                         if(SoundexIndex.containsKey(key)){
@@ -71,7 +65,7 @@ public class InvertedSoundex implements Serializable {
                         else {
                             createNewBlock(key, en.getRecordID());
                         }
-                    }
+                    
                 }
             //Print();
             break;
@@ -80,6 +74,25 @@ public class InvertedSoundex implements Serializable {
         
          //return null;       
         }
+    
+     public InvertedSoundex /*Map<String, ArrayList>*/ getSoundexIndex(String attribute, boolean saved){
+         InvertedSoundex SI = new InvertedSoundex();
+     
+         switch(attribute){
+            case "firstname":
+                SI = (InvertedSoundex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
+                return SI;
+                //break;
+                
+            case "lastname":
+                SI = (InvertedSoundex)  Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
+                return SI;
+                //break;
+         }
+         
+    return null;
+     }
+    
         
     
     

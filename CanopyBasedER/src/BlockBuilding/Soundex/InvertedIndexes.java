@@ -24,6 +24,7 @@ public class InvertedIndexes {
            InvertedSoundex aa = new InvertedSoundex();
            aa.getSoundexIndex(attribute);
            II.add(aa);
+           //II.add(aa.getSoundexIndex(attribute, true));
         }
         
         return II;

@@ -158,3 +158,5 @@ public class CanopyDynamicSoundex {
     }
      
 }
+
+// problem when new soundex key is inserted
