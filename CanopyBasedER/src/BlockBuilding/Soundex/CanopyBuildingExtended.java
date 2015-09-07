@@ -141,7 +141,7 @@ public class CanopyBuildingExtended {
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
-        
+        CI.setLastIndex(id);
         CI.printIndex();
         EI.printIndex();
         

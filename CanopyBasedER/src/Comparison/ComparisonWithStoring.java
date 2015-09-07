@@ -6,6 +6,7 @@
 package Comparison;
 
 import DataStuctures.Entity;
+import Experiments.SoundexExperiments.CanopyBuildingExperiment;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Indexes.Interfaces.CanopyIndexInterface;
@@ -16,7 +17,12 @@ import Indexes.RIndex;
 import Indexes.SimilarityIndex;
 import SimilarityFunctions.EntitySimilarity;
 import Utilities.Serialization;
+import Utilities.mySqlConnection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,13 +42,16 @@ public class ComparisonWithStoring {
         ri = RIndex;
         SI = SIndex;
         T1 = t1;
+        List<Entity> entitiesO;
+        
         double similarity = 0.0;
         recID = recordID;
         
         SI.createBlock(recID);
+        
         Entity OriginalEntity = ri.getRecord(recID);
         ArrayList<Entity> results = new ArrayList<>();
-        
+
         ArrayList<Integer> blocks = EI.getBlockList(recID);
         for (Integer block : blocks) {
             ArrayList<Entity> entities = getEntities(block);
@@ -58,6 +67,7 @@ public class ComparisonWithStoring {
         return results;
         
     }
+
     
     public ArrayList<Entity> getEntities(int blockID){
         ArrayList<Entity> entities=new ArrayList<>();
@@ -65,11 +75,11 @@ public class ComparisonWithStoring {
         if(ids.size() ==1){
             System.out.println("Only one element");
         }
-        for (String id : ids) {
-            //System.out.println("Canopy ID is "+ id);
-            entities.add(ri.getRecord(id));
-            
-        }
+//        for (String id : ids) {
+//            //System.out.println("Canopy ID is "+ id);
+//            entities.add(ri.getRecord(id));
+//            
+//        }
         return entities;
     }
 }

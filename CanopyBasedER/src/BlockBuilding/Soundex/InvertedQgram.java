@@ -28,7 +28,7 @@ public class InvertedQgram {
         List<Entity> Dataset = getRecords();
         ArrayList<String> temp = new ArrayList<>();
         for (Entity en : Dataset) {
-            List<String> keys = NGram.ngrams(3, en.getCity());
+            List<String> keys = NGram.ngrams(4, en.getCity());
             for (String key : keys) {
                 if(QgramIndex.containsKey(key)){
                     temp = QgramIndex.get(key);

@@ -13,10 +13,16 @@ import Utilities.Serialization;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import GUI.SqlTable;
+import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -27,20 +33,34 @@ public class MainGUI extends javax.swing.JFrame {
     String queryRecord;
     CanopyIndex CI;
     EntityIndex EI;
+    
+    DefaultTableModel model = new DefaultTableModel(new Object[][] {
+      { "some", "text" }, { "any", "text" }, { "even", "more" },
+      { "text", "strings" }, { "and", "other" }, { "text", "values" } },
+      new Object[] { "Column 1", "Column 2" });
+    
     /**
      * Creates new form MainGUI
      */
     public MainGUI() throws SQLException {
         initComponents();
+        this.setTitle("Canopy Clustering Based ER");
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE );
         CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
-       
-        this.jPanel1.add(jTable3);
-        //jTable3 = new JTable(SqlTable);
+        
+        
+
+    JTable table = new JTable(model);
+    jScrollPane1 = new JScrollPane(table);
+    //getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
+    pack();
+        
+
     }
     
-    public  void fillTable() throws SQLException{
-        jTable3.setModel((TableModel) new SqlTable());
+    public static void fillTable() throws SQLException{
+       
     }
 
     /**
@@ -57,10 +77,12 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         QueryField = new javax.swing.JTextField();
         Query = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
         ResultDisplay = new javax.swing.JScrollPane();
         ResultDisplay1 = new javax.swing.JTextArea();
+        MIDisplay = new javax.swing.JButton();
+        javax.swing.JButton EntityDisplay = new javax.swing.JButton();
+        IIDisplay = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -88,47 +110,57 @@ public class MainGUI extends javax.swing.JFrame {
             }
         });
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable3);
-
         ResultDisplay1.setColumns(20);
         ResultDisplay1.setRows(5);
         ResultDisplay.setViewportView(ResultDisplay1);
+
+        MIDisplay.setText("MI");
+        MIDisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MIDisplayActionPerformed(evt);
+            }
+        });
+
+        EntityDisplay.setText("EI");
+        EntityDisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EntityDisplayActionPerformed(evt);
+            }
+        });
+
+        IIDisplay.setText("Inverted Indexes");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ResultDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
-                    .addComponent(QueryField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(27, 27, 27)
+                                .addComponent(QueryField))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(ResultDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MIDisplay)
+                            .addComponent(EntityDisplay)
+                            .addComponent(IIDisplay))))
                 .addGap(27, 27, 27))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(7, 7, 7)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
-                    .addGap(8, 8, 8)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(143, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -139,12 +171,13 @@ public class MainGUI extends javax.swing.JFrame {
                         .addGap(22, 22, 22))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125))))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(39, 39, 39)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(181, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(MIDisplay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(EntityDisplay)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(IIDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jLabel7.getAccessibleContext().setAccessibleName("Query");
@@ -228,14 +261,27 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_QueryFieldActionPerformed
 
     private void QueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QueryActionPerformed
+            ResultDisplay1.setText("");
             queryRecord = QueryField.getText();
             comparisonWithoutStoring CS = new comparisonWithoutStoring();
             ArrayList<Entity> results = CS.getSimilarRecords(CI, EI, null, queryRecord, 0.7);
             for (Entity result : results) {
-                ResultDisplay1.append(result.getFirstName().replace(" ", "")+ " " + result.getLastName()+ "\n");
+                ResultDisplay1.append(result.getRecordID()/*.replace(" ", "")*/+ ", " + result.getFirstName()/*.replace(" ", "")*/+ ", " + result.getLastName()/*.replace(" ", "")*/+ 
+                            ", " + result.getCity().replace(" ", "")+ "\n");
                 
         }
     }//GEN-LAST:event_QueryActionPerformed
+
+    private void MIDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIDisplayActionPerformed
+        MainIndexDisplay MI = new MainIndexDisplay(CI);
+        MI.setVisible(true);
+    }//GEN-LAST:event_MIDisplayActionPerformed
+
+    private void EntityDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntityDisplayActionPerformed
+        EntityIndexDisplay EII = new EntityIndexDisplay(EI);
+        EII.setVisible(true);
+        
+    }//GEN-LAST:event_EntityDisplayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,6 +315,8 @@ public class MainGUI extends javax.swing.JFrame {
             public void run() {
                 try {
                     new MainGUI().setVisible(true);
+                     fillTable();
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -279,6 +327,8 @@ public class MainGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Database;
+    private javax.swing.JButton IIDisplay;
+    private javax.swing.JButton MIDisplay;
     private javax.swing.JButton Query;
     private javax.swing.JTextField QueryField;
     private javax.swing.JScrollPane ResultDisplay;
@@ -293,8 +343,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }

@@ -66,4 +66,14 @@ public class EntityIndex implements Serializable, EntityIndexInterface{
             //System.out.println(entry.getKey().hashCode());
         });
     }
+    
+    public ArrayList<String> getPrintIndex(){
+        ArrayList<String> records = new ArrayList<>();
+        EI.entrySet().stream().forEach((entry) -> {
+            records.add("Key : " + entry.getKey() + " Value : "
+                    + entry.getValue().toString());
+            //System.out.println(entry.getKey().hashCode());
+        });
+        return records;
+    }
 }

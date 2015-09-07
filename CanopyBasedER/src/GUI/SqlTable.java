@@ -60,17 +60,17 @@ public class SqlTable extends JPanel{
                 }
                 data.add(row);
             }
-             JFrame frame = new JFrame(); 
-             frame.setSize(500,120); 
-             frame.setLocationRelativeTo(null);
-             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+             //JFrame frame = new JFrame(); 
+             //frame.setSize(500,120); 
+             //frame.setLocationRelativeTo(null);
+             //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
              JPanel panel = new JPanel(); 
              JTable table = new JTable(data,columns); 
              JScrollPane jsp = new JScrollPane(table); 
              panel.setLayout(new BorderLayout()); 
              panel.add(jsp,BorderLayout.CENTER); 
-             frame.setContentPane(panel); 
-             frame.setVisible(true);
+             //frame.setContentPane(panel); 
+             //frame.setVisible(true);
 
         }
         

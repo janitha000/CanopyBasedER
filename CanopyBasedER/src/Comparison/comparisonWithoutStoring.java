@@ -52,8 +52,8 @@ public class comparisonWithoutStoring {
         
         ArrayList<Integer> blocks = EI.getBlockList(recID);
         for (Integer block : blocks) {
-            //ArrayList<Entity> entities = getEntityWithSceduling(blocks, block);
-            ArrayList<Entity> entities = getEntities(block);
+            ArrayList<Entity> entities = getEntityWithSceduling(blocks, block);
+            //ArrayList<Entity> entities = getEntities(block);
             for (Entity entity : entities) {
                 if(pp.getLeastCommonIndex(OriginalEntity.getRecordID(), entity.getRecordID(), EIndex) >= block ){
                     if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
@@ -90,12 +90,15 @@ public class comparisonWithoutStoring {
     public ArrayList<Entity> getEntityWithSceduling(ArrayList<Integer> blocks, int blockID){
         
         ArrayList<Entity> entities=new ArrayList<>();
+        HashMap<String,Entity> EN = getEntities();
         ArrayList<String> ids = CI.getEntityList(blockID);
         
         ArrayList<String> Scheduled = CS.scheduledRecords(blocks,ids, (EntityIndex) EI);
-        
+        System.out.println("Comparison Order");
         for (String Scheduled1 : Scheduled) {
-            entities.add(ri.getRecord(Scheduled1));
+            //entities.add(ri.getRecord(Scheduled1));
+            entities.add(EN.get(Scheduled1));
+            System.out.println("(AAA," + Scheduled1+")");
         }
         return entities;
     }

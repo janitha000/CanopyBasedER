@@ -81,7 +81,15 @@ public class CanopyIndex implements Serializable, CanopyIndexInterface{
         });
     }
     
-    
+    public ArrayList<String> getPrintIndex(){
+        ArrayList<String> records = new ArrayList<>();
+        CI.entrySet().stream().forEach((entry) -> {
+            records.add("Key : " + entry.getKey() + " Value : "
+                    + entry.getValue().toString());
+            //System.out.println(entry.getKey().hashCode());
+        });
+        return records;
+    }
 
     
 }
