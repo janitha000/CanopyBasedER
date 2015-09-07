@@ -8,6 +8,7 @@ package Experiments.SoundexExperiments;
 import BlockBuilding.CanopyClustering;
 import BlockBuilding.Soundex.CanopyBuilding;
 import BlockBuilding.Soundex.CanopyBuildingExtended;
+import BlockBuilding.Soundex.CanopyDynamicSoundex;
 import DataStuctures.Entity;
 import Utilities.mySqlConnection;
 import java.sql.SQLException;
@@ -49,6 +50,14 @@ public class CanopyBuildingExperiment {
                 attr.add("firstname");
                 attr.add("lastname");
                 cc.CreateCanopies(test, attr);
+                
+                CanopyDynamicSoundex CD = new CanopyDynamicSoundex(0.6, 0.9);
+                Entity add = new Entity("BBB", "Kasun", "Silva", "Kandy");
+                Entity add2 = new Entity("CCC", "Saman", "Dassanayaka", "Kandy");
+                Entity add3 = new Entity("DDD", "Saman", "Dasanayaka", "Kandy");
+                CD.addToCanopy(add, attr);
+                CD.addToCanopy(add2, attr);
+                CD.addToCanopy(add3, attr);
         
          long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;

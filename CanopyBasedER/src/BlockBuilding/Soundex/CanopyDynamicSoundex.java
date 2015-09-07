@@ -46,10 +46,11 @@ public class CanopyDynamicSoundex {
         InvertedSoundex soundexI;
         String[] attr = new String[attributes.size()];
         ArrayList<InvertedSoundex> II = new InvertedIndexes().getInvertedIndexes(attributes);
-        BlockID = CI.getLastIndex();
+        BlockID = CI.getLastIndex() + 1;
         ArrayList<Integer> ids = new ArrayList<>();
         
         String key = null;
+        int noCandidate = 0;
         soundexI = (InvertedSoundex) IS;
         String recordID = entity.getRecordID();
         
@@ -62,7 +63,25 @@ public class CanopyDynamicSoundex {
             soundexI = II.get(i);
             
             Boolean added = false;
+            
             ArrayList<String> candidates = soundexI.getCandidates(key);
+            
+            if(candidates == null){
+                soundexI.createNewBlock(key, recordID);
+                if(i ==0)
+                    Serialization.storeSerializedObject(soundexI, "E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
+                if(i == 1)
+                    Serialization.storeSerializedObject(soundexI, "E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
+                if(noCandidate == 1){
+                    CI.createBlock(BlockID, entity.getRecordID());
+                    EI.appendToBlock(recordID, BlockID);
+                    CI.setLastIndex(BlockID);
+                   
+                    break;    
+                }
+                noCandidate++;
+                continue;
+            } else {
             for (String candidateEntite : candidates) {
                 Entity currentEntity = records.get(candidateEntite);
                 if(currentEntity == null){
@@ -76,7 +95,7 @@ public class CanopyDynamicSoundex {
                 String currentID = currentEntity.getRecordID();
                 double similarity;
                 similarity = CanopySimilarity.getSimilarity(entity, currentEntity, 0.7, 0.3,1);
-                int currentBlockID = EI.getBlockList(currentID).indexOf(0);
+                int currentBlockID = (int) EI.getBlockList(currentID).get(0);
                 if (t1 <= similarity) {
                     
                     ids.add(currentBlockID);
@@ -93,17 +112,20 @@ public class CanopyDynamicSoundex {
                 
                 if(!added){
                 for (int blocksID : ids) {
-                    CI.appendToBlock(blocksID,entity.getRecordID());
-                    EI.appendToBlock(entity.getRecordID(), blocksID);
+                    CI.createBlock(BlockID,entity.getRecordID());
+                    EI.appendToBlock(entity.getRecordID(), BlockID);
+                    CI.setLastIndex(BlockID);
                 }
-            }
-                
-                
                 
             }
-            
+                
+                
+                
+            }
+            } 
         }
-        
+        CI.printIndex();
+        EI.printIndex();
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser"); 
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser"); 
         

@@ -7,8 +7,11 @@ package BlockBuilding.Soundex;
 
 import DataStuctures.Entity;
 import Experiments.BlockBuildongWithSQLCHECK;
+import Utilities.Serialization;
 import Utilities.Soundex;
 import Utilities.mySqlConnection;
+import java.io.File;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +24,9 @@ import java.util.logging.Logger;
  *
  * @author JanithaT
  */
-public class InvertedSoundex {
+public class InvertedSoundex implements Serializable {
     public Map<String,ArrayList> SoundexIndex = new HashMap<String, ArrayList>();
+    private static final long serialVersionUID = 1113799434508678564L;
    
     public void /*Map<String, ArrayList>*/ getSoundexIndex(String attribute){
         List<Entity> Dataset = getRecords();
@@ -30,16 +34,21 @@ public class InvertedSoundex {
         ArrayList<String> temp = new ArrayList<>();
         switch(attribute){
             case "firstname":
-                for (Entity en : Dataset) {
-                    String key = Soundex.soundex(en.getFirstName());
-                    if(SoundexIndex.containsKey(key)){
-                        temp= SoundexIndex.get(key);
-                        temp.add(en.getRecordID());
-                        SoundexIndex.put(key, temp);
-                
-                     }
-                    else {
-                        createNewBlock(key, en.getRecordID());
+                File f = new File("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
+                if(f.exists())
+                    SoundexIndex = (Map<String, ArrayList>) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
+                else {
+                    for (Entity en : Dataset) {
+                        String key = Soundex.soundex(en.getFirstName());
+                        if(SoundexIndex.containsKey(key)){
+                            temp= SoundexIndex.get(key);
+                            temp.add(en.getRecordID());
+                            SoundexIndex.put(key, temp);
+
+                         }
+                        else {
+                            createNewBlock(key, en.getRecordID());
+                        }
                     }
                 }
                 //Print();
@@ -47,16 +56,21 @@ public class InvertedSoundex {
         
                 //return SoundexIndex;
             case "lastname":
-                for (Entity en : Dataset) {
-                    String key = Soundex.soundex(en.getLastName());
-                    if(SoundexIndex.containsKey(key)){
-                        temp= SoundexIndex.get(key);
-                        temp.add(en.getRecordID());
-                        SoundexIndex.put(key, temp);
-                
-                     }
-                    else {
-                        createNewBlock(key, en.getRecordID());
+                File ff = new File("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
+                if(ff.exists())
+                    SoundexIndex = (Map<String, ArrayList>) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
+                else {
+                    for (Entity en : Dataset) {
+                        String key = Soundex.soundex(en.getLastName());
+                        if(SoundexIndex.containsKey(key)){
+                            temp= SoundexIndex.get(key);
+                            temp.add(en.getRecordID());
+                            SoundexIndex.put(key, temp);
+
+                         }
+                        else {
+                            createNewBlock(key, en.getRecordID());
+                        }
                     }
                 }
             //Print();
@@ -124,7 +138,8 @@ public class InvertedSoundex {
     
     public static void main(String[] args) {
         InvertedSoundex IS = new InvertedSoundex();
-        IS.getSoundexIndex("l");
+        IS.getSoundexIndex("lastname");
         IS.Print();
+        Serialization.storeSerializedObject(IS, "E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser"); 
     }
 }
