@@ -66,6 +66,7 @@ public class mySqlConnection {
            test.put("AAI",new Entity("AAI", "Ganitha", "Tennaakoon", "Kandy"));  
            test.put("AAH",new Entity("AAH", "Janitha", "Tennakon", "Kandy"));
            test.put("AAJ",new Entity("AAJ", "Janitha", "Tennakon", "Ambatenna"));
+           //test.put("CCC" , new Entity("CCC", "Saman", "Dassanayaka", "Kandy"));
            return test;
            
            
@@ -107,6 +108,7 @@ public class mySqlConnection {
              test.add(new Entity("AAI", "Ganitha", "Tennaakoon", "Kandy"));  
            test.add(new Entity("AAH", "Janitha", "Tennakon", "Kandy"));
            test.add(new Entity("AAJ", "Janitha", "Tennakon", "Ambatenna"));
+           //test.add(new Entity("CCC", "Saman", "Dassanayaka", "Kandy"));
            return test;
        }
        

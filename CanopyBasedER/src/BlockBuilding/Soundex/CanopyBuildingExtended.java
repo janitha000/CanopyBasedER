@@ -47,7 +47,19 @@ public class CanopyBuildingExtended {
         //HashMap<String,Entity> records = Erecords;
         //noOfRecords = Erecords.size();
         String[] attr = new String[attributes.size()];
-        ArrayList<InvertedSoundex> II = new InvertedIndexes().getInvertedIndexes(attributes);
+        ArrayList<InvertedSoundex> II = new InvertedIndexes().getInvertedIndexes(attributes,false);
+        int saveCount = 0;
+        for (InvertedSoundex SoundexIndexes : II) {
+            if(saveCount == 0){
+                Serialization.storeSerializedObject(SoundexIndexes, "E:\\4th Year\\Research\\Imp\\Indexes\\SoundexFname.ser");
+                
+            }
+            if(saveCount == 1){
+                Serialization.storeSerializedObject(SoundexIndexes, "E:\\4th Year\\Research\\Imp\\Indexes\\SoundexLname.ser");
+               
+            }
+            saveCount++;
+        }
         InvertedSoundex soundexI;
         int id = 1;
         blockID = 1;
@@ -137,7 +149,7 @@ public class CanopyBuildingExtended {
                     id++;
                    }
               attrID++;
-              
+        
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");

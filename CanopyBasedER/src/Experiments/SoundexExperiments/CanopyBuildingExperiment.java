@@ -56,10 +56,10 @@ public class CanopyBuildingExperiment {
                 Entity add2 = new Entity("CCC", "Saman", "Dassanayaka", "Kandy");
                 Entity add3 = new Entity("DDD", "Saman", "Dasanayaka", "Kandy");
                 Entity add4 = new Entity("EEE", "Janith", "Tennakoon", "Kandy");
-                CD.addToCanopy(add, attr);
+                //CD.addToCanopy(add, attr);
                 CD.addToCanopy(add2, attr);
                 CD.addToCanopy(add3, attr);
-                CD.addToCanopy(add4, attr);
+                //CD.addToCanopy(add4, attr);
         
          long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;

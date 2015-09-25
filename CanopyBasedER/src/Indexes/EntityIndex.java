@@ -36,8 +36,10 @@ public class EntityIndex implements Serializable, EntityIndexInterface{
             EI.put(recordID, blockIDs);
         } else {
             ArrayList<Integer> blockIDs = EI.get(recordID);
-            blockIDs.add(blockID);
-            EI.put(recordID,blockIDs);
+            if(!blockIDs.contains(blockID)){
+                blockIDs.add(blockID);
+                EI.put(recordID,blockIDs);
+            }
         }
     
     }

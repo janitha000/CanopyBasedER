@@ -34,8 +34,7 @@ public class CanopyDynamicSoundex {
      HashMap<String,Entity> records;
      
      public CanopyDynamicSoundex(Double T1, Double T2){
-        CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
-        EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
+        
         t1=T1;
         t2=T2;
         records = getRecords();
@@ -43,15 +42,22 @@ public class CanopyDynamicSoundex {
      }
      
      public void addToCanopy(Entity entity, ArrayList<String> attributes){
-        InvertedSoundex soundexI;
+        //Get the Canopy Index and Entity Index
+        CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
+        EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
+        
         String[] attr = new String[attributes.size()];
-        ArrayList<InvertedSoundex> II = new InvertedIndexes().getInvertedIndexes(attributes);
         BlockID = CI.getLastIndex() + 1;
+         
+        InvertedSoundex soundexI; // = (InvertedSoundex) IS;
+        
+        ArrayList<InvertedSoundex> II = new InvertedIndexes().getInvertedIndexes(attributes,true);
+        
         ArrayList<Integer> ids = new ArrayList<>();
         
         String key = null;
         int noCandidate = 0;
-        soundexI = (InvertedSoundex) IS;
+        
         String recordID = entity.getRecordID();
         
         for(int i=0; i< attr.length; i++){
@@ -60,7 +66,7 @@ public class CanopyDynamicSoundex {
             if(i == 1)
                 key= Soundex.soundex(entity.getLastName());
             
-            soundexI = II.get(i);
+            soundexI = (InvertedSoundex) II.get(i);
             
             Boolean added = false;
             
@@ -83,8 +89,8 @@ public class CanopyDynamicSoundex {
                 continue;
             } else {
             for (String candidateEntite : candidates) {
-                Entity currentEntity = records.get(candidateEntite);
-                if(currentEntity == null){
+                Entity currentEntity = records.get(candidateEntite);  
+                if(currentEntity == null){                                 //Item not inserted in to the database 
                             continue;
                 }
                         //System.out.println(currentEntity.getRecordID());
@@ -128,6 +134,7 @@ public class CanopyDynamicSoundex {
         EI.printIndex();
         Serialization.storeSerializedObject(CI, "E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser"); 
         Serialization.storeSerializedObject(EI, "E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser"); 
+        records.put(entity.getRecordID(), entity);
         
      }
      

@@ -34,8 +34,10 @@ public class CanopyIndex implements Serializable, CanopyIndexInterface{
     @Override
     public void appendToBlock(int blockID,String recordID){
         ArrayList<String> recordIDs = CI.get(blockID);
-        recordIDs.add(recordID);
-        CI.put(blockID, recordIDs);
+        if(!recordIDs.contains(recordID)){
+            recordIDs.add(recordID);
+            CI.put(blockID, recordIDs);
+        }
     }
     
     @Override
