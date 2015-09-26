@@ -14,9 +14,7 @@ import Indexes.EntityIndex;
 import Indexes.Interfaces.CanopyIndexInterface;
 import Indexes.Interfaces.EntityIndexInterface;
 import Indexes.Interfaces.RIndexInterface;
-import Indexes.RIndex;
 import SimilarityFunctions.EntitySimilarity;
-import Utilities.JaccardSimilarity;
 import Utilities.mySqlConnection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author JanithaT
  */
-public class comparisonWithoutStoring {
+public class ComparisonWithoutQuery {
     CanopyIndexInterface CI;
     EntityIndexInterface EI;
     RIndexInterface ri;
@@ -37,37 +35,29 @@ public class comparisonWithoutStoring {
     ComparisonScheduling CS;
      HashMap<String,Entity> Entities;
     
-    public ArrayList<Entity> getSimilarRecords(CanopyIndex CIndex, EntityIndex EIndex,  String recordID, double t1){
-        CI = CIndex;
-        EI = EIndex;
+    public ArrayList<Entity> getSimilarRecords(Entity queryEntity, ArrayList<String> CandidateResults, double t1){
+
         
         T1 = t1;
-        recID = recordID;
+
         Entities = getEntities();
-        ComparisonPropagation pp = new ComparisonPropagation();
-        CS = new ComparisonScheduling();
-       // Entity OriginalEntity = ri.getRecord(recID);
-        Entity OriginalEntity = Entities.get(recID);
+
+        Entity OriginalEntity = queryEntity;
         ArrayList<Entity> results = new ArrayList<>();
-        
-        ArrayList<Integer> blocks = EI.getBlockList(recID);
-        for (Integer block : blocks) {
-            ArrayList<Entity> entities = getEntityWithSceduling(blocks, block);
-            //ArrayList<Entity> entities = getEntities(block);
-            for (Entity entity : entities) {
-                if(pp.getLeastCommonIndex(OriginalEntity.getRecordID(), entity.getRecordID(), EIndex) >= block ){
-                    if(EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1) > T1){
-                        //System.out.println(OriginalEntity.getRecordID() + " "+ entity.getRecordID() +" " + EntitySimilarity.getSimilarity(OriginalEntity, entity, 0.6, 0.3, 0.1));
-                        results.add(entity);
+
+        for (String candidates : CandidateResults) {
+            //System.out.println(candidates);
+            
+            Entity currentEntity = Entities.get(candidates);
+            System.out.println(OriginalEntity.getRecordID() + " "+ currentEntity.getRecordID() +" " + EntitySimilarity.getSimilarity(OriginalEntity, currentEntity, 0.6, 0.3, 0.1));
+             if(EntitySimilarity.getSimilarity(OriginalEntity, currentEntity, 0.6, 0.3, 0.1) > T1){
+                        
+                        results.add(currentEntity);
                     }
-                }
-            }
+            
         }
-        
-        
-        
-        
-        
+            //ArrayList<Entity> entities = getEntities(block);
+
         return results;
         
     }
@@ -87,21 +77,7 @@ public class comparisonWithoutStoring {
         return entities;
     }
     
-    public ArrayList<Entity> getEntityWithSceduling(ArrayList<Integer> blocks, int blockID){
-        
-        ArrayList<Entity> entities=new ArrayList<>();
-        HashMap<String,Entity> EN = getEntities();
-        ArrayList<String> ids = CI.getEntityList(blockID);
-        
-        ArrayList<String> Scheduled = CS.scheduledRecords(blocks,ids, (EntityIndex) EI);
-        //System.out.println("Comparison Order");
-        for (String Scheduled1 : Scheduled) {
-            //entities.add(ri.getRecord(Scheduled1));
-            entities.add(EN.get(Scheduled1));
-            //System.out.println("(AAA," + Scheduled1+")");
-        }
-        return entities;
-    }
+    
     public HashMap<String,Entity> getEntities(){
         HashMap<String,Entity> test = new HashMap<String, Entity>();
          mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
@@ -127,6 +103,5 @@ public class comparisonWithoutStoring {
         });
                 return test;
     }
-    
     
 }

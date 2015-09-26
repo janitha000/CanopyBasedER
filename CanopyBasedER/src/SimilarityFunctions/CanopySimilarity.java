@@ -25,7 +25,7 @@ public class CanopySimilarity {
          double sim1, sim2; 
          switch(DistanceMeasure){
                 case 1:
-                    sim1= JaccardSimilarity.getStringJaccardSimilarity(entity1.getFirstName().split(""), entity2.getFirstName().split(""));
+                    sim1= JaccardSimilarity.getStringJaccardSimilarity(entity1.getFirstName().split(""), entity2.getFirstName().replaceAll("\\s","").split(""));
                     sim2 = JaccardSimilarity.getStringJaccardSimilarity(entity1.getLastName().split(""), entity2.getLastName().split(""));
                     return weight1 * sim1 + weight2 * sim2;
                 case 2:

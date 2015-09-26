@@ -29,7 +29,7 @@ public class CanopyBuildingExperiment {
      long startTime = System.currentTimeMillis();
         //CI = new CanopyIndex();
         HashMap<String,Entity> test = new HashMap<>();
-        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
+        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person2");
                 try {
                  
                     test = connecton.getInvertedIndexData();
@@ -51,14 +51,14 @@ public class CanopyBuildingExperiment {
                 attr.add("lastname");
                 cc.CreateCanopies(test, attr);
                 
-                CanopyDynamicSoundex CD = new CanopyDynamicSoundex(0.6, 0.9);
-                Entity add = new Entity("BBB", "Kasun", "Silva", "Kandy");
-                Entity add2 = new Entity("CCC", "Saman", "Dassanayaka", "Kandy");
-                Entity add3 = new Entity("DDD", "Saman", "Dasanayaka", "Kandy");
-                Entity add4 = new Entity("EEE", "Janith", "Tennakoon", "Kandy");
-                //CD.addToCanopy(add, attr);
-                CD.addToCanopy(add2, attr);
-                CD.addToCanopy(add3, attr);
+//                CanopyDynamicSoundex CD = new CanopyDynamicSoundex(0.6, 0.9);
+//                Entity add = new Entity("BBB", "Kasun", "Silva", "Kandy");
+//                Entity add2 = new Entity("CCC", "Saman", "Dassanayaka", "Kandy");
+//                Entity add3 = new Entity("DDD", "Saman", "Dasanayaka", "Kandy");
+//                Entity add4 = new Entity("EEE", "Janith", "Tennakoon", "Kandy");
+//                //CD.addToCanopy(add, attr);
+//                CD.addToCanopy(add2, attr);
+//                CD.addToCanopy(add3, attr);
                 //CD.addToCanopy(add4, attr);
         
          long stopTime = System.currentTimeMillis();

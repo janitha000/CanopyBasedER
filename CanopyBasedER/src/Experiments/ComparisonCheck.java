@@ -26,14 +26,15 @@ public class ComparisonCheck {
     static EntityIndex EI;
     
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+       
         RI = (RecordIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\RI.ser");
         CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
         ri = (RIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\rii.ser");
         
+         long startTime = System.currentTimeMillis();
         comparisonWithoutStoring cc = new comparisonWithoutStoring();
-        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, ri, "AAA",0.7);
+        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, "2",0.8);
         for (Entity result : results) {
             System.out.println("results "+ result.getRecordID() + " " + result.getFirstName()+ " " + result.getLastName());
         }

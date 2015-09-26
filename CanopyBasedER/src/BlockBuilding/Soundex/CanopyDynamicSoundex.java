@@ -140,7 +140,7 @@ public class CanopyDynamicSoundex {
      
      public HashMap<String,Entity> getRecords(){
           HashMap<String,Entity> test = new HashMap<String, Entity>();
-         mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person");
+         mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person2");
                 try {
                  
                     test = connecton.getInvertedIndexData();

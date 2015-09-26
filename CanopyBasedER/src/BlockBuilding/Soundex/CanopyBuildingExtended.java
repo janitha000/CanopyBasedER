@@ -75,9 +75,10 @@ public class CanopyBuildingExtended {
              HashMap<String,Entity> records = Erecords;
              noOfRecords = Erecords.size();
              HashMap<String,Entity> candidateEntitiyIndex = getcandidateEntities();
-             long startTime = System.currentTimeMillis();
+             //long startTime = System.currentTimeMillis();
              
               while(!records.isEmpty()){
+                  long startTime = System.nanoTime();
                   Iterator iter = records.entrySet().iterator();
                     Map.Entry pair = (Map.Entry)iter.next();
                     Entity firstEntity = (Entity) pair.getValue();
@@ -140,12 +141,12 @@ public class CanopyBuildingExtended {
                     //System.out.println(id);
                     CI.setLastIndex(blockID);
                     blockID++;
-                    long stopTime = System.currentTimeMillis();
+                    long stopTime = System.nanoTime();
                     long elapsedTime = stopTime - startTime;
-                    if(id % 1000 == 0){
-                        System.out.println(" Elapsed time is " +elapsedTime/1000);
-                        startTime = stopTime;
-                    }
+                    //if(id % 1000 == 0){
+                        System.out.println(" Elapsed time is " +elapsedTime/1000000);
+                    //    startTime = stopTime;
+                   // }
                     id++;
                    }
               attrID++;

@@ -264,7 +264,7 @@ public class MainGUI extends javax.swing.JFrame {
             ResultDisplay1.setText("");
             queryRecord = QueryField.getText();
             comparisonWithoutStoring CS = new comparisonWithoutStoring();
-            ArrayList<Entity> results = CS.getSimilarRecords(CI, EI, null, queryRecord, 0.7);
+            ArrayList<Entity> results = CS.getSimilarRecords(CI, EI, queryRecord, 0.7);
             for (Entity result : results) {
                 ResultDisplay1.append(result.getRecordID()/*.replace(" ", "")*/+ ", " + result.getFirstName()/*.replace(" ", "")*/+ ", " + result.getLastName()/*.replace(" ", "")*/+ 
                             ", " + result.getCity().replace(" ", "")+ "\n");

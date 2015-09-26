@@ -37,6 +37,7 @@ public class InvertedSoundex implements Serializable {
                 
                     for (Entity en : Dataset) {
                         String key = Soundex.soundex(en.getFirstName());
+                        //System.out.println(key + " " + en.getFirstName() + " " + en.getLastName() + " " + en.getRecordID());
                         if(SoundexIndex.containsKey(key)){
                             temp= SoundexIndex.get(key);
                             temp.add(en.getRecordID());
