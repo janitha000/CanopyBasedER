@@ -71,7 +71,7 @@ public class InvertedQgram {
     }
      
      public void Print(){
-        System.out.println("Soundex INDEX");
+        System.out.println("QGram INDEX");
       
         QgramIndex.entrySet().stream().forEach((entry) -> {
             System.out.println("Key : " + entry.getKey());//+ " " + entry.getValue().size());

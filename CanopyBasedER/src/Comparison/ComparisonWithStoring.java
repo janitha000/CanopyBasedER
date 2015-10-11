@@ -6,7 +6,6 @@
 package Comparison;
 
 import DataStuctures.Entity;
-import Experiments.SoundexExperiments.CanopyBuildingExperiment;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Indexes.Interfaces.CanopyIndexInterface;
@@ -17,12 +16,8 @@ import Indexes.RIndex;
 import Indexes.SimilarityIndex;
 import SimilarityFunctions.EntitySimilarity;
 import Utilities.Serialization;
-import Utilities.mySqlConnection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

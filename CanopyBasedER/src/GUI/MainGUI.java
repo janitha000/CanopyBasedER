@@ -5,18 +5,26 @@
  */
 package GUI;
 
+import BlockBuilding.Soundex.InvertedIndexes;
+import BlockBuilding.Soundex.InvertedSoundex;
+import Comparison.ComparisonWithoutQuery;
 import Comparison.comparisonWithoutStoring;
 import DataStuctures.Entity;
+import Experiments.SoundexExperiments.CanopyBuildingExperiment;
+import static Experiments.SoundexExperiments.QueryExperiment.getRecords;
 import Indexes.CanopyIndex;
 import Indexes.EntityIndex;
 import Utilities.Serialization;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import GUI.SqlTable;
+import Query.InvertedQuery;
+import Utilities.mySqlConnection;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -33,7 +41,10 @@ public class MainGUI extends javax.swing.JFrame {
     String queryRecord;
     CanopyIndex CI;
     EntityIndex EI;
-    
+    InvertedIndexes I;
+    ArrayList<String> attributes;
+    HashMap<String, Entity> records ;
+            
     DefaultTableModel model = new DefaultTableModel(new Object[][] {
       { "some", "text" }, { "any", "text" }, { "even", "more" },
       { "text", "strings" }, { "and", "other" }, { "text", "values" } },
@@ -48,15 +59,43 @@ public class MainGUI extends javax.swing.JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE );
         CI = (CanopyIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\CI.ser");
         EI = (EntityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\EI.ser");
+         I = new InvertedIndexes();
+        attributes = new ArrayList<>();
+        attributes.add("firstname");
+        attributes.add("lastname");
+        records = getRecords();
         
         
 
     JTable table = new JTable(model);
-    jScrollPane1 = new JScrollPane(table);
+    
     //getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
     pack();
         
 
+    }
+    
+     public static HashMap<String, Entity> getRecords() {
+        HashMap<String, Entity> test = new HashMap<String, Entity>();
+        mySqlConnection connecton = new mySqlConnection("csvimport", "root", "jibtennakoon", "person2");
+        try {
+
+            test = connecton.getInvertedIndexData();
+                    //for (Entity en : test) {
+            //System.out.println("Record name " + en.getFirstName());
+            //}
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CanopyBuildingExperiment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        test.entrySet().stream().forEach((entry) -> {
+            //System.out.print("Key : " + entry.getKey());
+            Entity list = entry.getValue();
+
+                //System.out.println(" " + list.getFirstName() );
+            //System.out.println(entry.getKey().hashCode());
+        });
+        return test;
     }
     
     public static void fillTable() throws SQLException{
@@ -75,19 +114,17 @@ public class MainGUI extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        QueryField = new javax.swing.JTextField();
+        attr1 = new javax.swing.JTextField();
         Query = new javax.swing.JButton();
         ResultDisplay = new javax.swing.JScrollPane();
         ResultDisplay1 = new javax.swing.JTextArea();
         MIDisplay = new javax.swing.JButton();
-        javax.swing.JButton EntityDisplay = new javax.swing.JButton();
+        EntityDisplay = new javax.swing.JButton();
         IIDisplay = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        attr2 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        attr3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Database = new javax.swing.JMenuItem();
@@ -95,11 +132,11 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel7.setText("Query ID");
+        jLabel7.setText("Attribute1");
 
-        QueryField.addActionListener(new java.awt.event.ActionListener() {
+        attr1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QueryFieldActionPerformed(evt);
+                attr1ActionPerformed(evt);
             }
         });
 
@@ -130,96 +167,75 @@ public class MainGUI extends javax.swing.JFrame {
 
         IIDisplay.setText("Inverted Indexes");
 
+        jLabel4.setText("Attribute2");
+
+        jLabel5.setText("Attribute3");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(attr3))
+                    .addComponent(ResultDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(27, 27, 27)
-                                .addComponent(QueryField))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(ResultDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(MIDisplay)
-                            .addComponent(EntityDisplay)
-                            .addComponent(IIDisplay))))
-                .addGap(27, 27, 27))
+                            .addComponent(attr1)
+                            .addComponent(attr2))
+                        .addGap(1, 1, 1)))
+                .addGap(36, 36, 36)
+                .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(MIDisplay)
+                .addGap(26, 26, 26)
+                .addComponent(EntityDisplay)
+                .addGap(32, 32, 32)
+                .addComponent(IIDisplay)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(MIDisplay)
+                    .addComponent(EntityDisplay)
+                    .addComponent(IIDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(QueryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(ResultDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(Query, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(MIDisplay)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EntityDisplay)
+                            .addComponent(attr1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(IIDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(attr2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(attr3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(ResultDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         jLabel7.getAccessibleContext().setAccessibleName("Query");
 
         jTabbedPane1.addTab("tab1", jPanel1);
-
-        jLabel1.setText("Threshold(T1)");
-
-        jLabel2.setText("Threshold(T2)");
-
-        jLabel3.setText("Similarity Function");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(42, 42, 42)
-                .addComponent(jLabel2)
-                .addGap(42, 42, 42)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(248, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(249, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab2", jPanel2);
 
         jMenu1.setText("File");
 
@@ -256,32 +272,41 @@ public class MainGUI extends javax.swing.JFrame {
        new DatabaseForm().setVisible(true);
     }//GEN-LAST:event_DatabaseActionPerformed
 
-    private void QueryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QueryFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_QueryFieldActionPerformed
+    private void EntityDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntityDisplayActionPerformed
+        EntityIndexDisplay EII = new EntityIndexDisplay(EI);
+        EII.setVisible(true);
 
-    private void QueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QueryActionPerformed
-            ResultDisplay1.setText("");
-            queryRecord = QueryField.getText();
-            comparisonWithoutStoring CS = new comparisonWithoutStoring();
-            ArrayList<Entity> results = CS.getSimilarRecords(CI, EI, queryRecord, 0.7);
-            for (Entity result : results) {
-                ResultDisplay1.append(result.getRecordID()/*.replace(" ", "")*/+ ", " + result.getFirstName()/*.replace(" ", "")*/+ ", " + result.getLastName()/*.replace(" ", "")*/+ 
-                            ", " + result.getCity().replace(" ", "")+ "\n");
-                
-        }
-    }//GEN-LAST:event_QueryActionPerformed
+    }//GEN-LAST:event_EntityDisplayActionPerformed
 
     private void MIDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIDisplayActionPerformed
         MainIndexDisplay MI = new MainIndexDisplay(CI);
         MI.setVisible(true);
     }//GEN-LAST:event_MIDisplayActionPerformed
 
-    private void EntityDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntityDisplayActionPerformed
-        EntityIndexDisplay EII = new EntityIndexDisplay(EI);
-        EII.setVisible(true);
-        
-    }//GEN-LAST:event_EntityDisplayActionPerformed
+    private void QueryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QueryActionPerformed
+        ResultDisplay1.setText("");
+        String attrr1 = (!attr1.getText().isEmpty()) ? attr1.getText() : " "  ;
+        String attrr2 = (!attr2.getText().isEmpty()) ? attr2.getText() : " "  ;
+        String attrr3 = (!attr3.getText().isEmpty()) ? attr3.getText() : " "  ;
+
+        Entity queryEntity = new Entity("QUERY", attrr1, attrr2, attrr3);
+        ArrayList<InvertedSoundex> II = I.getInvertedIndexes(attributes, true);
+
+        InvertedQuery IQ = new InvertedQuery();
+        ArrayList<Entity> results = IQ.query(queryEntity, II, CI, EI, 0.6, 0.9, records);
+
+        if(results.isEmpty())
+        ResultDisplay1.append("No Results in the Database");
+        for (Entity result : results) {
+            ResultDisplay1.append(result.getRecordID()/*.replace(" ", "")*/+ ", " + result.getFirstName()/*.replace(" ", "")*/+ ", " + result.getLastName()/*.replace(" ", "")*/+
+                ", " + result.getCity().replace(" ", "")+ "\n");
+
+        }
+    }//GEN-LAST:event_QueryActionPerformed
+
+    private void attr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attr1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_attr1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,23 +352,22 @@ public class MainGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Database;
+    private javax.swing.JButton EntityDisplay;
     private javax.swing.JButton IIDisplay;
     private javax.swing.JButton MIDisplay;
     private javax.swing.JButton Query;
-    private javax.swing.JTextField QueryField;
     private javax.swing.JScrollPane ResultDisplay;
     private javax.swing.JTextArea ResultDisplay1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField attr1;
+    private javax.swing.JTextField attr2;
+    private javax.swing.JTextField attr3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

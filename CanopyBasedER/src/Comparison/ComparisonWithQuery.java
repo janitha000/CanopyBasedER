@@ -11,7 +11,9 @@ import Experiments.SoundexExperiments.CanopyBuildingExperiment;
 import Indexes.Interfaces.CanopyIndexInterface;
 import Indexes.Interfaces.EntityIndexInterface;
 import Indexes.Interfaces.RIndexInterface;
+import Indexes.SimilarityIndex;
 import SimilarityFunctions.EntitySimilarity;
+import Utilities.Serialization;
 import Utilities.mySqlConnection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,11 +25,11 @@ import java.util.logging.Logger;
  *
  * @author JanithaT
  */
-public class ComparisonWithoutQuery {
-
+public class ComparisonWithQuery {
     CanopyIndexInterface CI;
     EntityIndexInterface EI;
     RIndexInterface ri;
+    SimilarityIndex SI;
     String recID;
     double T1;
     ComparisonScheduling CS;
@@ -36,10 +38,13 @@ public class ComparisonWithoutQuery {
     public ArrayList<Entity> getSimilarRecords(Entity queryEntity, ArrayList<String> CandidateResults, double t1) {
 
         T1 = t1;
-
+        SI = (SimilarityIndex) Serialization.loadSerializedObject("E:\\4th Year\\Research\\Imp\\Indexes\\SI.ser");
         Entities = getEntities();
 
         Entity OriginalEntity = queryEntity;
+        if(SI.keys().contains(OriginalEntity.getRecordID())){
+            
+        }
         ArrayList<Entity> results = new ArrayList<>();
 
         for (String candidates : CandidateResults) {
@@ -47,14 +52,14 @@ public class ComparisonWithoutQuery {
 
             Entity currentEntity = Entities.get(candidates);
             System.out.println(OriginalEntity.getRecordID() + " " + currentEntity.getRecordID() + " " + EntitySimilarity.getSimilarity(OriginalEntity, currentEntity, 0.6, 0.3, 0.1));
-            if (EntitySimilarity.getSimilarity(OriginalEntity, currentEntity, 0.4, 0.4, 0.2) > T1) {
+            if (EntitySimilarity.getSimilarity(OriginalEntity, currentEntity, 0.6, 0.3, 0.1) > T1) {
 
                 results.add(currentEntity);
             }
 
         }
         //ArrayList<Entity> entities = getEntities(block);
-
+        Serialization.storeSerializedObject(SI, "E:\\4th Year\\Research\\Imp\\Indexes\\SI.ser");
         return results;
 
     }
@@ -96,5 +101,4 @@ public class ComparisonWithoutQuery {
         });
         return test;
     }
-
 }

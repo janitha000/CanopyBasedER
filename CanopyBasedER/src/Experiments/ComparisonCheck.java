@@ -34,7 +34,7 @@ public class ComparisonCheck {
         
          long startTime = System.currentTimeMillis();
         comparisonWithoutStoring cc = new comparisonWithoutStoring();
-        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, "2",0.8);
+        ArrayList<Entity> results = cc.getSimilarRecords(CI, EI, "1",0.8);
         for (Entity result : results) {
             System.out.println("results "+ result.getRecordID() + " " + result.getFirstName()+ " " + result.getLastName());
         }

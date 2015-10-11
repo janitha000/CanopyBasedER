@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -32,6 +33,16 @@ public class SimilarityIndex implements Serializable, SimilarityIndexInterface{
         ArrayList<SimilarityBlocks> similarities = SI.get(ID);
         similarities.add(new SimilarityBlocks(recID, similarity));
         SI.put(ID, similarities);
+    }
+    
+    public ArrayList<SimilarityBlocks> SimilarityRecords(String recordID){
+        
+        return SI.get(recordID);
+        
+    }
+    
+      public Set keys() {
+        return SI.keySet();
     }
     
     @Override
